@@ -1,5 +1,5 @@
 "use strict";
-const { Model } = require("sequelize");
+const { Model, Sequelize } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Testimonial extends Model {}
   Testimonial.init(
@@ -22,10 +22,18 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
         type: DataTypes.STRING,
       },
-      createdAt: {
+      deletedAt: {
+        allowNull: true,
         type: DataTypes.DATE,
-        field: "created_at",
+      },
+      createdAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
         defaultValue: Sequelize.NOW,
+      },
+      updatedAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
       },
     },
     {

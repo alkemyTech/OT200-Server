@@ -23,10 +23,16 @@ module.exports = {
           allowNull: true,
           type: Sequelize.STRING,
         },
-        createdAt: {
+        deletedAt: {
           type: Sequelize.DATE,
-          field: "created_at",
-          defaultValue: Sequelize.NOW,
+        },
+        createdAt: {
+          allowNull: false,
+          type: Sequelize.DATE,
+        },
+        updatedAt: {
+          allowNull: false,
+          type: Sequelize.DATE,
         },
       },
       {
