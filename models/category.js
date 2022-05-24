@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  Categorie.init(
+  Category.init(
     {
       name: DataTypes.STRING,
       description: DataTypes.STRING,
@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "categories",
+      modelName: "Categories",
       timestamps: true,
       paranoid: true,
     }
