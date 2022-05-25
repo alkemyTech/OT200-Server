@@ -1,24 +1,30 @@
 const db = require("../models");
 const Activity = db.activity;
 
-const create = (req, res) => {
+const createActivity = (req, res) => {
     
 };
 
-const getAll = (req, res) => {
+const getAllActivities = (req, res) => {
 
 };
 
-const getOne = (req, res) => {
+const getOneActivity = (req, res) => {
 
 };
 
-const update = (req, res) => {
+const updateActivity = (req, res) => {
 
 };
 
-const deleteOne = (req, res) => {
+const deleteActivity = (req, res) => {
 
 };
 
-module.exports = activityController;
+module.exports = {
+    createActivity,
+    getAllActivities,
+    getOneActivity,
+    updateActivity,
+    deleteActivity
+};
