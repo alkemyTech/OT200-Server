@@ -1,7 +1,6 @@
 
 const JWT = require('jsonwebtoken');
-const secret = "AlkemyLab";//Esta variable debe ir en un archivo de configuración
-                           //En este caso la declaramos aquí a modo de ejemplo para su uso 
+const secret = process.env.SECRET;
 
 const verifyToken = (req, res, next) => {
     const token = req.headers['x-access-token'];
