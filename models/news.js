@@ -11,7 +11,6 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       New.hasOne(models.Category, {
         foreignKey: "categoryId",
-        otherKey: "idSender",
       });
     }
   }
