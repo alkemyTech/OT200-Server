@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { verifyToken, generateToken } = require('../middleware/userToken');
 const validLogin = require('../middleware/validLogin');
+const userController = require('../controllers/userController');
 
-router.post('/login',verifyToken, generateToken, validLogin)
+router.post('/login', validLogin, userController)
