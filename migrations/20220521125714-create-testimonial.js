@@ -34,9 +34,6 @@ module.exports = {
           allowNull: false,
           type: Sequelize.DATE,
         },
-      },
-      {
-        paranoid: true,
       }
     );
   },
