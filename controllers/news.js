@@ -1,6 +1,4 @@
-const db = require('../models');
-
-
+const db = require("../models/index");
 class NewsController {
     async detail(req, res) {        
         await db.News.findByPk(req.params.id).then(news => {
