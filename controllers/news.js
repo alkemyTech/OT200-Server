@@ -1,17 +1,24 @@
-const db = require("../models/index");
-class NewsController {
-    async detail(req, res) {        
-        await db.News.findByPk(req.params.id).then(news => {
-            res.status(200).json({
-                data: news
+const findId = require('../services/news.js');
+
+const  newsController = {
+    detail: async (req, res) => {        
+        try{
+            if(!findId){
+                return res.status(404).json({
+                    message: 'No se encontro la noticia'
+                });
+            }else{
+                return res.status(200).json({
+                    message: 'Se encontro la noticia',
+                    data: findId
+                });
+            }
+        }catch{
+            return res.status(500).json({
+                message: 'Ocurrio un error'
             });
-        }).catch(error => {
-            res.status(500).json({
-                message: 'Error',
-                data: error
-            });
-        });
-    }
+        }
+    },
 }
 
-module.exports = NewsController;
+module.exports = newsController;
