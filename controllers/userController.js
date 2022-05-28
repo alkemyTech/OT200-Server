@@ -1,6 +1,6 @@
 const {validationResult} = require('express-validator');
 const bcrypt = require('bcrypt');
-const db = require('../database/models');
+const findUser = require('../services/findId');
 
 const userController = {
     login: (req, res) => {
@@ -12,22 +12,15 @@ const userController = {
             });
         }
 
-        const {email, password} = req.body;
-
         try{
-            let user = await db.User.findOne({
-                where: {
-                    email
-                }
-            });
-
-            if(!user)res.status(404).json({message: 'Usuario no encontrado', ok: false});
+          
+            if(!findUser)res.status(404).json({message: 'Usuario no encontrado', ok: false});
         
-            let isValidPassword = await bcrypt.compareSync(password, user.password);
+            let isValidPassword = await bcrypt.compareSync(password, findUser.password);
 
             if(!isValidPassword) res.status(401).json({message: 'Contraseña incorrecta', ok: false});
             
-            res.status(200).json({message: 'Login exitoso', data: {user, token}});
+            res.status(200).json({message: 'Login exitoso', user: findUser, token});
 
         }catch(error){
             return res.status(500).json({
