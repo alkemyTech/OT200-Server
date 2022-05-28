@@ -1,14 +1,15 @@
 const { request, response } = require('express');
-const db = require('../models');
+const { userRolAdmin } = require('../helpers')
 
 //Verifica si el usuario es adminitrador o no, de no serlo restringe su acceso
 const checkAdmin = async( req = request, res = response, next ) => {
 
     //El rolId se obtendria del user que viajaria en el JWT, se verificaria al solicitar el endpoint
+      // const rolUser = 1;
       const rolUser = req.user.rolId;
     
     //Buscamos el registro en db referenciado al Adminstrador
-      const rolAdmin = await db.Role.findOne({where: { name: 'Admin'} });
+      const rolAdmin = await userRolAdmin('admin');
        
     //Se contrasta si el rolId pertenece a un admistrador
       if( rolUser !== rolAdmin.id ) {
