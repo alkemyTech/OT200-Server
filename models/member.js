@@ -21,6 +21,8 @@ module.exports = (sequelize, DataTypes) => {
     linkedinUrl: DataTypes.STRING,
     image: DataTypes.STRING,
     description: DataTypes.DATE,
+    createdAt: DataTypes.DATE,
+    updatedAt: DataTypes.DATE,
     deletedAt: DataTypes.DATE
   }, {
     sequelize,
