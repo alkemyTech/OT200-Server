@@ -1,2 +1,5 @@
 node_modules
 .env
+mysql_data
+docker-compose.yml
+docker-init.sh
