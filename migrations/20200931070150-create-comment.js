@@ -13,9 +13,11 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       body: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       post_id: {
+        allowNull: false,
         type: Sequelize.INTEGER
       },
       deletedAt: {
