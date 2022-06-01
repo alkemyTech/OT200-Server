@@ -19,7 +19,7 @@ const fileFilter = (req, file, cb) => {
     cb(null, true);
   }
   else {
-    cb( new multer.MulterError("LIMIT_UNEXPECTED_FILE"), false)
+    cb( new multer.MulterError("LIMIT_UNEXPECTED_FILE"), false);
   }
 }
 
