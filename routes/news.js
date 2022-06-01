@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const {validateNews, validations} = require('../middleware/news');
+const validations = require('../middleware/news');
 const newsController = require('../controllers/news');
+const validatorHandler = require('../middlewares/validatorHandler');
 
-router.post('/',validateNews(validations),newsController.create)
+router.post('/',validatorHandler(validations),newsController.create)
 
 module.exports = router;
