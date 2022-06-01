@@ -8,7 +8,7 @@ const getMembers = (req = request, res = response) => {
 
 const createMember = async (req, res) => {
   const { name } = req.body;
-  if (!name || name === undefined) {
+  if (!name || name === undefined || typeof name !== "string") {
     return res.json({
       success: false,
       message: "Please introduce a valid input",
