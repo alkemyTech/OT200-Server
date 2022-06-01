@@ -1,4 +1,4 @@
-const validatorHandler = require("../middlewares/validatorHandler");
+const validatorHandler = require("../middleware/validatorHandler");
 const registrationSchema = require("./../schemas/user");
 const express = require("express");
 const { checkSchema } = require("express-validator");
