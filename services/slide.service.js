@@ -1,5 +1,15 @@
 const slideModel = require('../models').Slide;
 
+
+const slideCount = async () => {
+  try {
+    return slideModel.count();
+  }
+  catch (err) {
+    throw err;
+  }
+}
+
 const createSlide = async (slide) => {
   try {
     return await slideModel.create(slide);
@@ -9,4 +19,4 @@ const createSlide = async (slide) => {
   }
 }
 
-module.exports = { createSlide };
+module.exports = { slideCount, createSlide };

@@ -1,13 +1,14 @@
-const { createSlide } = require('../services/slide.service');
+const { createSlide, slideCount } = require('../services/slide.service');
 
 const createNewSlide = async (req, res) => {
   
   const { text, order, organizationId } = req.body;
+  const currentOrder = await slideCount();
 
   const slide = {
     imageUrl: `http://localhost:3000/slides/${req.file.filename}`,
     text,
-    order,
+    order: order || currentOrder + 1,
     organizationId
   };
 
