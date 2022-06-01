@@ -12,6 +12,17 @@ const storage = multer.diskStorage({
     cb( null, `${originalname.split('.')[0]}-${Date.now()}.${originalname.split('.')[1].toLowerCase()}` );
   }
 });
-const upload = multer({ storage: storage });
+
+// throws an exeption if file is not jpg jpeg or png
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype.split('/')[0] === 'image') {
+    cb(null, true);
+  }
+  else {
+    cb( new multer.MulterError("LIMIT_UNEXPECTED_FILE"), false)
+  }
+}
+
+const upload = multer({ storage, fileFilter });
 
 module.exports = { upload };
