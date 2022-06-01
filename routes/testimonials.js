@@ -10,8 +10,8 @@ const checkAdmin = require("../middleware/checkAdmin");
 
 router.post(
     "/",
-    verifyToken,
-    checkAdmin,
+    // verifyToken,
+    // checkAdmin,
     validatorHandler(checkSchema(testimonialSchema)),
     createTestimonial
 );
