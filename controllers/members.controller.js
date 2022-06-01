@@ -6,6 +6,10 @@ const getMembers = ( req = request, res = response  ) => {
 
 }
 
+const createMember = async (req, res) => {
+    
+}
+
 
 module.exports = {
     getMembers,
