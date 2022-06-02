@@ -3,6 +3,7 @@ const { createSlide, slideCount } = require('../services/slide.service');
 const createNewSlide = async (req, res) => {
   
   const { text, order, organizationId } = req.body;
+  if (!req.file || !req.file.lenght) return res.status(400).json({ error: true, message: "Debes seleccionar una imagen"});
   
   try {
     const currentOrder = await slideCount();
