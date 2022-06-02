@@ -10,7 +10,7 @@ const createTestimonial = async (req, res) => {
         const data = req.body;
         const newTestimonial = await create(data);
 
-        return res.json(newTestimonial)
+        return res.status(201).json(newTestimonial)
 
     } catch (error) {
         
