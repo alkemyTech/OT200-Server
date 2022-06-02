@@ -3,7 +3,7 @@ const router = express.Router();
 const validations = require('../middleware/news');
 const newsController = require('../controllers/news');
 const validatorHandler = require('../middlewares/validatorHandler');
-const checkAdmin = require('../middlewares/checkAdmin');
+const checkAdmin = require('../middleware/checkAdmin');
 
 router.post('/',validatorHandler(validations),newsController.create,checkAdmin)
 
