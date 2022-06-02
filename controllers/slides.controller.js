@@ -14,7 +14,7 @@ const createNewSlide = async (req, res) => {
 
   try {
     const newSlide = await createSlide(slide);
-    res.status(200).json({error: false, data: newSlide, message: "creaste un nuevo slide"});
+    res.status(201).json({error: false, data: newSlide, message: "creaste un nuevo slide"});
   }
   catch (error) {
       res.status(500).json({error: true, message: `Ocurrió un error, no se pudo crear el slide, Error: ${error}`});
