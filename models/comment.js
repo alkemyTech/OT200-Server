@@ -9,6 +9,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Comment.belongsTo(models.New, {
+        as: 'new',
+        foreignKey: 'id',
+        target_key: 'post_id'
+      });
     
     }
   };
