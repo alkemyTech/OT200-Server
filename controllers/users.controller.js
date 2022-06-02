@@ -5,9 +5,9 @@ const userToken = require('../middleware/userToken');
 const userController = {
     login: (req, res) => {
         try{
-            const {password } = req.body;
+            const {password, email } = req.body;
             
-            const user = findUser(req.body);
+            const user = findUser(email);
 
             if(!user){
                 return res.status(400).json({message: 'Usuario no encontrado', ok: false});

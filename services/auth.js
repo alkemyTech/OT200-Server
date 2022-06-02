@@ -1,10 +1,11 @@
 const db = require('../models');
 
-const findUser = async (req, res) => {
-    const { email } = req.body;
-    const user = await db.User.findOne({email});
+const findUser = async () => {
+  
+    const user = await db.User.findOne();
 
     return user
+
 }
 
 module.exports = findUser;
