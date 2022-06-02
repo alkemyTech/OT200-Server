@@ -14,8 +14,12 @@ const createMember = async (req, res) => {
       message: "Please introduce a valid input",
     });
   } else {
-    const newMember = await Member.create(req.body);
-    return res.json(newMember);
+    try {
+      const newMember = await Member.create(req.body);
+      return res.status(200).json(newMember);
+    } catch (error) {
+      return res.status(404).json(error.message);
+    }
   }
 };
 
