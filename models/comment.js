@@ -14,6 +14,11 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'id',
         target_key: 'post_id'
       });
+      Comment.belongsTo(models.User, {
+        as: 'user',
+        foreignKey: 'id',
+        target_key: 'user_id'
+      });
     
     }
   };
