@@ -8,15 +8,7 @@ const getAllActivities = (req, res) => {};
 const getOneActivity = (req, res) => {};
 
 const updateActivity = async (req, res) => {
-  const { id } = req.params;
-  const verify = await Activity.findOne({
-    where: {
-      id: id,
-    },
-  });
-  if (!verify) {
-    return res.json({ success: false, message: "The user isn't in database" });
-  } else {
+  try {
     const activity = await Activity.update(
       {
         name: req.body.name,
@@ -25,11 +17,13 @@ const updateActivity = async (req, res) => {
       },
       {
         where: {
-          id: id,
+          id: parseInt(id),
         },
       }
     );
-    return res.json(activity);
+    return res.status(200).json(activity);
+  } catch (error) {
+    return res.status(404).json(error.message);
   }
 };
 
