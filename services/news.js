@@ -1,10 +1,8 @@
 const db = require('../models/index');
 
-const findId = async (req, res) => {
-
-    const id = req.params.id;
+const findId = async () => {
     
-    const news = await db.News.findOne({id});
+    const news = await db.News.findByPk();
 
     return news
 
