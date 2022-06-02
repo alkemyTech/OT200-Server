@@ -5,6 +5,7 @@ const { checkSchema } = require("express-validator");
 const { createUser } = require("../controllers/auth.controller");
 const router = express.Router();
 
+
 router.post(
   "/register",
   validatorHandler(checkSchema(registrationSchema)),
