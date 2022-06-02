@@ -18,7 +18,11 @@ module.exports = {
       },
       post_id: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'News',
+          key: 'id',
+        }
       },
       deletedAt: {
         type: Sequelize.DATE
