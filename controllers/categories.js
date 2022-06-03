@@ -7,14 +7,17 @@
 //HASTA ACA LO QUE ESTABA EN EL ARCHIVO.------------------------
 
 //HAGO EL CONTROLLER PARA PODER AVANZAR.
-const db = require('../models');
-const Category = db.Category;
+const {findAll} = require('../services/categories');
 
 const createCategory = (req, res) => {
 
 };
 
 const getAllCategories = (req, res) => {
+
+    const categories = await findAll();
+
+    res.send(categories);
 
 };
 
