@@ -3,6 +3,7 @@ const usersRouter = require('./users');
 const authRouter = require('./auth');
 const membersRouter = require('./members');
 const slidesRouter = require('./slides');
+const testimonialsRouter = require('./testimonials');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -14,6 +15,7 @@ router.use('/users', usersRouter);
 router.use('/auth', authRouter);
 router.use('/members', membersRouter);
 router.use('/slides', slidesRouter);
+router.use('/testimonials', testimonialsRouter);
 
 
 module.exports = router;
