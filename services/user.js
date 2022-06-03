@@ -16,6 +16,8 @@ const create = async (data) =>{
 
 }
 
-module.exports = create
+module.exports = {
+    create,
+}
 
 
