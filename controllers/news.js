@@ -12,6 +12,12 @@ const  newsController = {
                     message: 'No se encontró la noticia'
                 })
             }
+            
+            res.status(200).json({
+                message: 'Noticia encontrada',
+                data: news
+            })
+
 
         }catch{
             return res.status(500).json({
