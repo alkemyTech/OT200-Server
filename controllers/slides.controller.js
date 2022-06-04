@@ -1,4 +1,4 @@
-const { createSlide, slideCount } = require('../services/slide.service');
+const { createSlide, slideCount, destroySlide } = require('../services/slide.service');
 
 const createNewSlide = async (req, res) => {
   
@@ -22,4 +22,21 @@ const createNewSlide = async (req, res) => {
     }
 }
 
-module.exports = { createNewSlide };
+
+const deleteSlide = async(req,res) => { 
+
+  const { id } = req.params;
+
+  try {
+
+     await destroySlide( id );
+
+    res.json({error: false, message:`El slide con id: -${id}- ah sido eliminado de la DB`});
+
+    } catch (error) {
+
+    res.status(400).json( {error: true, message: error} );
+ }
+};
+
+module.exports = { createNewSlide, deleteSlide };
