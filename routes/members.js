@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { getMembers } = require("../controllers/members.controller");
+const { getMembers, deleteOneMember } = require("../controllers/members.controller");
 const checkAdmin = require("../middleware/checkAdmin");
 const verifyToken = require("../middleware/verifyToken");
 
@@ -10,4 +10,11 @@ router.get(
   // checkAdmin,
   getMembers
 );
+
+router.delete(
+  "/:id",
+  // verifyToken,
+  deleteOneMember
+)
+
 module.exports = router;

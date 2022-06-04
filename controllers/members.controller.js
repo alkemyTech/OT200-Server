@@ -1,5 +1,5 @@
 const { request, response } = require('express');
-const find = require("./../services/member")
+const {find, deleteOne} = require("./../services/member")
 
 const getMembers = async ( req = request, res = response  ) => {
 
@@ -20,7 +20,30 @@ const getMembers = async ( req = request, res = response  ) => {
 
 }
 
+const deleteOneMember = async (req ,res) => {
+
+    try {
+
+        const {id} = req.params;
+        
+        await deleteOne(id);
+    
+        return res.json({
+            message: "deleted",
+            id
+        })
+        
+    } catch (error) {
+
+        return res.status(404).json({
+            error: true,
+            message: error.message
+        })
+    }
+}
+
 
 module.exports = {
     getMembers,
+    deleteOneMember
 }

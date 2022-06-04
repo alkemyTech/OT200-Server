@@ -8,4 +8,23 @@ const find = async () => {
 
 }
 
-module.exports = find
+const findOne = async (id) => {
+
+    const member = await db.Member.findByPk(id);
+
+    if(!member) throw new Error("Member not found");
+
+    return member
+}
+
+const deleteOne = async (id) => {
+
+    const member = await findOne(id);
+
+    await member.destroy();    
+}
+
+module.exports = {
+    find,
+    deleteOne
+}
