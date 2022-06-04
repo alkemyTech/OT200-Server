@@ -17,7 +17,7 @@ const getAllCategories = (req, res) => {
 
     const categories = await findAll();
 
-    res.send(categories);
+    res.json(categories);
 
 };
 
