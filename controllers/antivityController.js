@@ -21,9 +21,9 @@ const updateActivity = async (req, res) => {
         },
       }
     );
-    return res.status(200).json(activity);
+    return res.status(activity.success ? 200 : 404).json(activity);
   } catch (error) {
-    return res.status(404).json(error.message);
+    return res.status(500).json(error.message);
   }
 };
 
