@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const verifyToken = "Importar";
 const checkAdmin = "Importar2";
-const {createActivity} = require('../controllers/activities')
+const activityController = require('../controllers/activities')
 
 
-router.post('/', verifyToken, checkAdmin, createActivity);
+router.post('/', verifyToken, checkAdmin, activityController);

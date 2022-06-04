@@ -20,6 +20,8 @@ const activityController = async (req, res) => {
 
         }
     } catch (error) {
-        
+        res.status(500).json({message: "Ha ocurrido un problema al crear la nueva actividad"})
     }
 }
+
+module.exports = activityController;
