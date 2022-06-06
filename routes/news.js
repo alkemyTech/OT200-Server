@@ -1,8 +1,8 @@
 const express = require('express');
-const newsController = require('../controllers/news');
+const {detailNews} = require('../controllers/news');
 const router = express.Router();
-const checkAdmin = require('../middleware/checkAdmin');
+const {checkAdmin, verifyToken} = require('../middleware/checkAdmin');
 
-router.get('/:id', checkAdmin,newsController.detail);
+router.get('/:id',verifyToken, checkAdmin, detailNews);
 
 module.exports = router;
