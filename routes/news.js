@@ -1,8 +1,12 @@
 const express = require('express');
-const newsController = require('../controllers/news');
+const {updateNews} = require('../controllers/news');
 const router = express.Router();
 const checkAdmin = require('../middleware/checkAdmin');
+const verifyToken = require('../middleware/verifyToken');
 
-router.put('/:id',checkAdmin, newsController.update);
+router.put('/:id',
+// verifyToken,
+// checkAdmin,
+updateNews);
 
 module.exports = router;
