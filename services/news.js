@@ -1,10 +1,10 @@
 const db = require("../models/index");
 
-const createNews = async (news) => {
+const create = async (dataNews) => {
             
-        const news = await db.News.create(news);
+        const news = await db.News.create(dataNews);
 
         return news;
 }
 
-module.exports = createNews;
+module.exports = create;
