@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      New.hasOne(models.Categories, {//SE CAMBIA CATEGORY POR CATEGORIES POR QUE TIRA ERRROR CON models.Category
+      New.hasOne(models.Category, {
         foreignKey: "categoryId",
       });
     }

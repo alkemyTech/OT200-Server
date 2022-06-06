@@ -11,11 +11,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      // Slide.belongsTo(models.Organization, {----------------SE COMENTA TODA LA ASOCIACION PARA PASAR ERROR
-      //   // estas keys son estimadas porque aun no existe el modelo Organization
-      //   foreignKey: 'id',
-      //   target_key: 'organizationId'
-      // });
+      Slide.belongsTo(models.Organization, {
+        // estas keys son estimadas porque aun no existe el modelo Organization
+        foreignKey: 'id',
+        target_key: 'organizationId'
+      });
     }
   };
   Slide.init({

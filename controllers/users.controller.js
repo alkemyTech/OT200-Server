@@ -19,17 +19,22 @@ const updateUser = async (req, res) => {
         let password = user.password === undefined ? userDb.password : user.password;
         let photo = user.photo === undefined ? userDb.photo : user.photo;
 
+        try {
+            const userUpdated = await update({
+                firstName, lastName, email,
+                password, photo
+            }, id);
 
-        const userUpdated = await update({firstName,lastName,email, 
-        password, photo}, id);
+            res.json(userUpdated);
 
-        console.log(user);
-        res.json(userUpdated);
+        } catch (error) {
+            res.status(500).json(error);
+        }
+
+
     }
 
-    //console.log(userDb);
-    // const userUpdated = await update(User);
-    //res.json(userDb);
+
 
 }
 
