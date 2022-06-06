@@ -9,12 +9,7 @@ const { getAllUsers } = require('../controllers/users.controller');
 //   res.send('respond with a resource');
 // });
 
-router.get('/',
-//middlewares:
-verifyToken,
-checkAdmin,
-//controller:
- getAllUsers );
+router.get('/', verifyToken, checkAdmin, getAllUsers );
 
 
 module.exports = router;
