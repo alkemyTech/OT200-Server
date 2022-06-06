@@ -9,7 +9,7 @@ const getOneActivity = (req, res) => {};
 const updateActivity = async (req, res) => {
   const { id } = req.params;
   try {
-    const upActivity = updatedb(req.body, id);
+    const upActivity = await updatedb(req.body, id);
     return res.status(upActivity.id ? 200 : 404).json(upActivity);
   } catch (error) {
     return res.status(500).json(error.message);
