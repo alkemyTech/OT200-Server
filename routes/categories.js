@@ -5,7 +5,7 @@ const checkAdmin = require('../middleware/checkAdmin');
 const verifyToken = require('../middleware/verifyToken');
 
 //Middleware para validar campos
-const validatorHandler = require('../middlewares/validatorHandler');
+const validatorHandler = require('../middleware/validatorHandler');
 //Se importa controlador de controllers
 const Categories = require('../controllers/categories');
 
