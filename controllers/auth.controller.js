@@ -6,7 +6,7 @@ const createUser = async (req, res) => {
         const data = req.body;
         const newUser = await create(data)
         
-        return res.json(newUser);
+        return res.status(201).json(newUser);
 
     } catch (error) {
 

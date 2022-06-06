@@ -1,8 +1,22 @@
 const { request, response } = require('express');
+const find = require("./../services/member")
 
-const getMembers = ( req = request, res = response  ) => {
+const getMembers = async ( req = request, res = response  ) => {
 
-    res.status(200).json({ msg: 'getMembers'});
+    try {
+
+        const members = await find();
+
+        return res.json(members);
+
+    } catch (error) {
+
+        return res.status(500).json({
+            error: true,
+            message: "Something was wrong"
+        })
+        
+    }
 
 }
 
