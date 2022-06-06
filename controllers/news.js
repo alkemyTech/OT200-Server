@@ -1,10 +1,10 @@
-const { create } = require("../services/news");
+const create = require("../services/news");
 
 const createNews = async (req, res) => {
     try {
-        const { title, content, image} = req.body;
+        const dataNews = req.body;
 
-        const news = await create(title, content, image);
+        const news = await create(dataNews);
 
         res.status(201).json(news);
 
