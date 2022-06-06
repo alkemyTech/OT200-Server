@@ -8,3 +8,6 @@ const router = express.Router();
 router.put("/:id", verifyToken, checkAdmin, updateActivity);
 
 module.exports = router;
+
+
+
