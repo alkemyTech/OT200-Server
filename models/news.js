@@ -12,6 +12,9 @@ module.exports = (sequelize, DataTypes) => {
       New.hasOne(models.Categories, {
         foreignKey: "categoryId",
       });
+      New.hasMany(models.Comment, {
+        foreignKey: 'post_id'
+      })
     }
   }
   New.init(
