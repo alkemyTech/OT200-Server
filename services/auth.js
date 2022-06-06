@@ -1,8 +1,8 @@
 const db = require('../models');
 
-const findUser = async () => {
+const findUser = async (email) => {
   
-    const user = await db.User.findOne();
+    const user = await db.User.findOne(email);
 
     return user
 
