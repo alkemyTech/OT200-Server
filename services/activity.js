@@ -1,7 +1,7 @@
 const db = require("../models");
 const Activity = db.activity;
 
-function updatedb(body,idActivity) {
+ async function updatedb(body,idActivity) {
     const activity = await Activity.update(
         {
             name: body.name,
