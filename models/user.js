@@ -13,6 +13,9 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'id',
         target_key: 'roleId'
       });
+      User.hasMany(models.Comment, {
+        foreignKey: 'user_id'
+      })
     }
   };
   User.init({
