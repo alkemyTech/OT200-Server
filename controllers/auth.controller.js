@@ -21,9 +21,7 @@ const createUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
     try{
-        const {password} = req.body;
-
-        const email = req.body.email;
+        const {password, email} = req.body;
         
         const user = findUser(email);
 
