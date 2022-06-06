@@ -1,23 +1,20 @@
-// const db = require("../models/index");
-// class CategoryController {
-  
-// }
-// module.exports = CategoryController;
 
-//HASTA ACA LO QUE ESTABA EN EL ARCHIVO.------------------------
-
-//HAGO EL CONTROLLER PARA PODER AVANZAR.
-const {findAll} = require('../services/categories');
+const { findAll } = require('../services/categories');
 
 const createCategory = (req, res) => {
 
 };
 
-const getAllCategories = (req, res) => {
+const getAllCategories = async (req, res) => {
+    try {
+        const categories = await findAll();
 
-    const categories = await findAll();
+        res.json(categories);
 
-    res.json(categories);
+    } catch (error) {
+        res.json(error);
+    }
+
 
 };
 
