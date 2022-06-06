@@ -1,6 +1,6 @@
 const findId = require('../services/news.js');
 
-const detailNews = (req, res) => {
+const detailNews = async (req, res) => {
     try{
         const {id} = req.params;
 
