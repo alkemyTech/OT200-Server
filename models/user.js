@@ -31,5 +31,15 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: true,
     paranoid: true
   });
+
+  //Remueve el password del usuario. 
+  User.prototype.toJSON =  function () {
+    let values = Object.assign({}, this.get());
+  
+    delete values.password;
+    return values;
+  };
+
+
   return User;
 };
