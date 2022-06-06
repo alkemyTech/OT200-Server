@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const validations = require('../middleware/news');
-const newsController = require('../controllers/news');
+const newsFieldsValidation = require('../middleware/newsValidator');
+const {createNews} = require('../controllers/news');
 const validatorHandler = require('../middlewares/validatorHandler');
-const checkAdmin = require('../middleware/checkAdmin');
+const {checkAdmin, verifyToken} = require('../middleware/checkAdmin');
 
-router.post('/',validatorHandler(validations),checkAdmin,newsController.create)
+router.post('/', verifyToken, checkAdmin, validatorHandler(newsFieldsValidation), createNews)
 
 module.exports = router;
