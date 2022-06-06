@@ -18,7 +18,7 @@ checkAdmin,
 validatorHandler( categoriesFields ),
  
 //Controller:
-Categories.createCategory
+Categories.newCategory
 
 );
 

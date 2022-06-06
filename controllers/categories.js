@@ -1,13 +1,12 @@
-const { create } = require('../services/category');
+const { createCategory } = require('../services/category');
 
 class CategoryController {
 
-//Metodo POST/ TODO:crear una nueva categoria en DB
- static async createCategory(req, res){
+ static async newCategory(req, res){
       const { name, description, image } = req.body;
       
       
-      const categoria = await create({ name, description, image });
+      const categoria = await createCategory({ name, description, image });
 
 
       res.status(200).json({ msg:'ok', categoria});
