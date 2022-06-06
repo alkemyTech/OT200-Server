@@ -1,7 +1,6 @@
 const express = require("express");
 const { createMember } = require("../controllers/members.controller");
 const verifyName = require("../middleware/verifyName");
-const verifyToken = require("../middleware/verifyToken");
 const { body } = require("express-validator");
 
 const router = express.Router();
