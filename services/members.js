@@ -2,7 +2,7 @@ const db = require("../models");
 const Member = db.member;
 
 
-function creatememberdb(body) {
+async function creatememberdb(body) {
     const { id, name, facebookUrl, instagramUrl, linkedinUrl, image, description } = body
     const newMember = await Member.create({
         id: id,
