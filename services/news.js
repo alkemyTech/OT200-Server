@@ -4,15 +4,15 @@ const findNews = async (id) => {
 
     const newsId = await db.News.findByPk(id)
 
-    if (!newsId) {
-        throw new Error('News not found')
+    if (newsId === null) {
+        console.log('News not found')
     }
 
     return newsId
     
 }
 
-const updateNews = async (dataUpdate) => {
+const updateNewsService = async (dataUpdate) => {
 
     const update = await db.News.update(dataUpdate)
 
@@ -23,4 +23,4 @@ const updateNews = async (dataUpdate) => {
     return update
 }
 
-module.exports = {findNews, updateNews};
+module.exports = {findNews, updateNewsService};
