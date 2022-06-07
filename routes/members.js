@@ -1,15 +1,13 @@
 const express = require("express");
 const { createMember } = require("../controllers/members.controller");
-const verifyName = require("../middleware/verifyName");
-const { body } = require("express-validator");
+const {
+  verifyInputs,
+  errorhandler,
+} = require("../middleware/verifyMembersInputs");
+const verifyToken = require("../middleware/verifyToken");
 
 const router = express.Router();
 
-router.post(
-    "/",
-    body("name", "Please enter a valid input").exists().isString(),
-    verifyName,
-    createMember
-);
+router.post("/", verifyToken, verifyInputs, errorhandler, createMember);
 
 module.exports = router;
