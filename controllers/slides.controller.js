@@ -35,7 +35,15 @@ const deleteSlide = async(req,res) => {
 
     } catch (error) {
 
-    res.status(400).json( {error: true, message: error} );
+      console.log(error);
+
+      if( !error.status ) {
+
+        return res.status(500).json( {error: true, message: 'Error en el servidor, comuníquese con el administrador'} );
+
+      }
+
+    res.status(error.status).json( {error: true, message: error.message} );
  }
 };
 
