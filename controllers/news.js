@@ -16,11 +16,13 @@ const detailNews = async (req, res) => {
             message: 'Noticia encontrada',
             data: news
         })
-    }catch{
-        return res.status(500).json({
-            message: 'Ocurrio un error'
-        });
+    }catch(error){
+        res.status(500).json({
+            message: 'Error al buscar la noticia',
+            error
+        })
     }
+
 }
 
 
