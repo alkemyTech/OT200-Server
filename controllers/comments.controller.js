@@ -18,7 +18,6 @@ const newComment = async(req = request, res = response ) => {
 
     } catch (error) {
 
-        console.log(error.stack);
         res.status(500).json({ error: true, message: 'Error en el servidor, Comuniquese con el administrador', comment: null});
     }
 
