@@ -6,8 +6,8 @@ const verifyToken = require("../middleware/verifyToken");
 
 router.get(
   "/",
-  // verifyToken,
-  // checkAdmin,
+  verifyToken,
+  checkAdmin,
   getMembers
 );
 

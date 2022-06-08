@@ -8,20 +8,12 @@ const find = async () => {
 
 }
 
-const findOne = async (id) => {
-
-    const member = await db.Member.findByPk(id);
-
-    if(!member) throw new Error("Member not found");
-
-    return member
-}
-
 const deleteOne = async (id) => {
 
-    const member = await findOne(id);
+    const member =  await db.Member.destroy( { where: { id } } );    
 
-    await member.destroy();    
+    return member
+
 }
 
 module.exports = {
