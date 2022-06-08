@@ -1,3 +1,4 @@
+const creatememberdb = require("../services/members");
 const { request, response } = require('express');
 const find = require("./../services/member")
 
@@ -20,7 +21,16 @@ const getMembers = async ( req = request, res = response  ) => {
 
 }
 
+const createMember = async (req, res) => {
+  try {
+    const newMember = await creatememberdb(req.body);
+    return res.status(201).json(newMember);
+  } catch (error) {
+    return res.status(500).json(error.message);
+  }
+};
 
 module.exports = {
-    getMembers,
-}
+  getMembers,
+  createMember,
+};
