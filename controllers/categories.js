@@ -1,5 +1,4 @@
-const { findAll } = require('../services/categories');
-const { createCategory } = require('../services/category');
+const { findAll, createCategory } = require('../services/categories');
 
 
 const newCategory = async(req, res) => {
@@ -14,11 +13,10 @@ const newCategory = async(req, res) => {
         
     } catch (error) {
 
-        console.log(error);
         res.status(500).json({ error: true, message:'Ah ocurrido un error, comuniquese con administración', category: null});
     }
         
-}
+};
 
 const getAllCategories = async (req, res) => {
     try {
