@@ -1,6 +1,6 @@
-const createActivity = require('../services/activities');
+const create = require('../services/activities').create;
 
-const activityController = async (req, res) => {
+const createActivity = async (req, res) => {
 
     const activityBody = req.body;
 
@@ -8,20 +8,16 @@ const activityController = async (req, res) => {
     const content = activityBody.content;
 
     try {
-        if ((name==="" || name===undefined) || (content==="" || content===undefined)) {
-            
-            res.status(500).json({message: "Los campos name y content no puede estar vacíos"})
+        
+        const activity = await create(name, content);
 
-        } else {
-            
-            const activity = await createActivity(name, content);
+        res.status(201).json(activity);
 
-            res.status(201).json(activity);
-
-        }
     } catch (error) {
-        res.status(500).json({message: "Ha ocurrido un problema al crear la nueva actividad"})
+        res.status(500).json({ message: "Ha ocurrido un problema al crear la nueva actividad" })
     }
 }
 
-module.exports = activityController;
+module.exports = {
+    createActivity
+};
