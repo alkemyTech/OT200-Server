@@ -1,27 +1,18 @@
-const { Router } = require('express');
-const router = Router();
-const { categoriesFields } = require('../helpers');
-const checkAdmin = require('../middleware/checkAdmin');
+const express = require("express");
+const router = express.Router();
+const getCategories = require('../controllers/categories').getAllCategories;
 const verifyToken = require('../middleware/verifyToken');
+const checkAdmin = require('../middleware/checkAdmin');
 
-//Middleware para validar campos
+const { categoriesFields } = require('../helpers');
 const validatorHandler = require('../middleware/validatorHandler');
-//Se importa controlador de controllers
-const Categories = require('../controllers/categories');
+const { newCategory } = require('../controllers/categories');
 
 
-//Methods:
-//POST
-router.post('/',
-verifyToken,
-checkAdmin,
-validatorHandler( categoriesFields ),
- 
-//Controller:
-Categories.newCategory
+router.post('/',verifyToken , checkAdmin, validatorHandler( categoriesFields ), newCategory);
 
-);
 
+router.get("/", verifyToken, checkAdmin, getCategories);
 
 
 
