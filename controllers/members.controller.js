@@ -1,8 +1,25 @@
 const creatememberdb = require("../services/members");
+const { request, response } = require('express');
+const find = require("./../services/member")
 
-const getMembers = (req, res) => {
-  res.status(200).json({ msg: "getMembers" });
-};
+const getMembers = async ( req = request, res = response  ) => {
+
+    try {
+
+        const members = await find();
+
+        return res.json(members);
+
+    } catch (error) {
+
+        return res.status(500).json({
+            error: true,
+            message: "Something was wrong"
+        })
+        
+    }
+
+}
 
 const createMember = async (req, res) => {
   try {
