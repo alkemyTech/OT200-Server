@@ -1,6 +1,6 @@
 const { findAll } = require('../services/user');
 
-//Controllers:
+
 const getAllUsers = async(req, res) => {
 
   try {
