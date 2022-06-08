@@ -1,19 +1,10 @@
 const db = require("./../models/")
 
-const findOne = async (id) => {
-
-    const category = await db.Categories.findByPk(id);    
-
-    if(!category) throw new Error("Category not found");
-
-    return category
-}
-
 const deleteOne = async (id) => {
 
-    const category = await findOne(id);
+   const category =  await db.Categories.destroy( { where: { id } } );    
 
-    await category.destroy();    
+   return category
 }
 
 module.exports = deleteOne

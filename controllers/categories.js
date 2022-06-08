@@ -6,19 +6,27 @@ const deleteOneCategory = async (req, res)=> {
 
         const {id} = req.params;
         
-        await deleteOne(id);
-    
+        const result = await deleteOne(id);
+
+        if(result === 0) {
+            return res.status(404).json({
+                error: true,
+                message: "Category not found"
+            })
+        }
+        
         return res.json({
-            message: "deleted",
+            message: "Deleted",
             id
         })
-        
+
     } catch (error) {        
 
-        return res.status(404).json({
+        return res.status(500).json({
             error: true,
-            message: error.message
+            message: "Something went wrong"
         })
+
     }
 }
 
