@@ -11,7 +11,7 @@ const getAllUsers = async(req, res) => {
     
   } catch (error) {
 
-    console.log(error.stack);
+    
     res.status(500).json({error: true, message:'Error en el servidor, comuniquese con el administrador', users:null});
     
   }
