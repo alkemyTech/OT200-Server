@@ -2,7 +2,7 @@ const checkOwnership = (req, res, next) => {
 
     const { id } = req.params;
     const tokenId = req.user.id;
-    const tokenRoleId = req.user.roleId
+    const tokenRoleId = req.user.roleId;
 
     if (Number(id) === tokenId || tokenRoleId === 1) return next();
 
