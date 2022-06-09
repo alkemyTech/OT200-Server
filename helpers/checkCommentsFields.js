@@ -7,5 +7,12 @@ const commentsFields = [
     check('body', 'El campo body es obligatorio').trim().not().isEmpty(),
 ];
 
+const updateFields = [
+    check("user_id", "Please introduce a valid user_id").not().isEmpty(),
+    check('post_id', 'Please introduce a valid post_id').isEmpty(),
+    check('body', 'Please introduce a update data').not().isEmpty().isString(),
+]
 
-module.exports = commentsFields;
+
+
+module.exports = { commentsFields, updateFields };
