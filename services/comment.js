@@ -9,26 +9,23 @@ const createComment = async (data) => {
 };
 
 const changeComment = async (body, commentId) => {
-  const check = (body) => {
-    return Object.keys(body).length === 0;
-  };
+  const comment = await DB.update(
+    { body },
+    {
+      where: {
+        id: parseInt(commentId),
+      },
+    }
+  );
 
-  if (!check) {
-    const comment = await DB.update(
-      { body },
-      {
-        where: {
-          id: parseInt(commentId),
-        },
-      }
-    );
-
-    return comment;
+  if (!comment) {
+    return { success: false, message: "User not found" };
   } else {
-    throw { message: "Please insert data" };
+    return comment;
   }
 };
 
 module.exports = {
   createComment,
+  changeComment,
 };
