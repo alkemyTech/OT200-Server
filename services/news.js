@@ -1,26 +1,23 @@
 const db = require('../models/index');
 
-const findNews = async (id) => {
+const updateNewsService = async (id, dataUpdate) => {
 
-    const newsId = await db.News.findByPk(id)
+    const {name, content, image} = dataUpdate;
 
-    if (newsId === null) {
-        console.log('News not found')
+    const update = await db.News.update({
+        name,content,image
+    },{
+        where : {id}
+    });
+
+    const updateNew = findId(id);
+
+    if(update === 1){
+        return updateNew;
+    }else{
+        return false;
     }
 
-    return newsId
-    
 }
 
-const updateNewsService = async (dataUpdate) => {
-
-    const update = await db.News.update(dataUpdate)
-
-    if (!update) {
-        throw new Error('News not found')
-    }
-
-    return update
-}
-
-module.exports = {findNews, updateNewsService};
+module.exports = {updateNewsService};
