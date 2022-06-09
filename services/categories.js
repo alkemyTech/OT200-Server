@@ -1,5 +1,12 @@
 const db = require('../models');
 
+const deleteOne = async (id) => {
+
+    const category =  await db.Categories.destroy( { where: { id } } );    
+ 
+    return category
+ }
+
 const findAll = async() => {
     
     const category = await db.Category.findAll({attributes: 'name'});
@@ -32,5 +39,6 @@ const getCategory = async( id ) => {
 module.exports = {
     findAll,
     createCategory,
-    getCategory
+    getCategory,
+    deleteOne
 };

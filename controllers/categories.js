@@ -1,5 +1,35 @@
-const { findAll, createCategory, getCategory } = require('../services/categories');
+const { findAll, createCategory, getCategory, deleteOne } = require('../services/categories');
 
+
+const deleteCategory = async (req, res)=> {
+
+    try {
+
+        const {id} = req.params;
+        
+        const result = await deleteOne(id);
+
+        if(result === 0) {
+            return res.status(404).json({
+                error: true,
+                message: "Category not found"
+            })
+        }
+        
+        return res.json({
+            message: "Deleted",
+            id
+        })
+
+    } catch (error) {        
+
+        return res.status(500).json({
+            error: true,
+            message: "Something went wrong"
+        })
+
+    }
+}
 
 const newCategory = async(req, res) => {
 
@@ -61,17 +91,12 @@ const updateCategory = (req, res) => {
 
 };
 
-const deleteCategory = (req, res) => {
-
-};
 
 module.exports = {
     newCategory,
     getAllCategories,
     getOneCategory,
     updateCategory,
-    deleteCategory
+    deleteCategory,
 }
-
-
 
