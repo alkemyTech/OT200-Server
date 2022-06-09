@@ -1,4 +1,4 @@
-const create = require("../services/user");
+const {create} = require("../services/user");
 const findUser = require('../services/auth');
 const bcrypt = require('bcrypt');
 const userToken = require('../middleware/userToken');
