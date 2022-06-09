@@ -1,4 +1,4 @@
-const { findAll, createCategory } = require('../services/categories');
+const { findAll, createCategory, getCategory } = require('../services/categories');
 
 
 const newCategory = async(req, res) => {
@@ -32,7 +32,28 @@ const getAllCategories = async (req, res) => {
 
 };
 
-const getOneCategory = (req, res) => {
+const getOneCategory = async(req, res) => {
+
+    const { id } = req.params;
+
+    try {
+
+        const category = await getCategory( id );
+    
+        res.status(200).json({error: false, message: 'ok', category});
+        
+    } catch (error) {
+        if( !error.status ) {
+           return res.status(500).json({
+                error: true,
+                message: 'Error en el servidor, comunicarse con el administrador ',
+                category: null
+            });
+        }
+
+        res.status(error.status).json({error: true, message: error.message, category: null});
+
+    }
 
 };
 
