@@ -23,9 +23,14 @@ const newComment = async(req = request, res = response ) => {
 
 };
 
+const updateComment = async (req, res) => {
+    
+}
+
 
 
 module.exports = {
     getComments,
     newComment,
+    updateComment
 }
