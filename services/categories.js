@@ -7,6 +7,18 @@ const findAll = async() => {
     return category;
 }
 
+const createCategory = async(data) => {
+
+    const category = new db.Categories( data );
+
+    await category.save();
+
+    return category;
+};
+
+
+
 module.exports = {
-    findAll
+    findAll,
+    createCategory
 };
