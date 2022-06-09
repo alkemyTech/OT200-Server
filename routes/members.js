@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { getMembers, deleteOneMember } = require("../controllers/members.controller");
+const { getMembers,createMember, deleteOneMember } = require("../controllers/members.controller");
 const checkAdmin = require("../middleware/checkAdmin");
 const verifyToken = require("../middleware/verifyToken");
 
@@ -16,5 +16,12 @@ router.delete(
   // verifyToken,
   deleteOneMember
 )
+
+const {
+  verifyInputs,
+  errorhandler,
+} = require("../middleware/verifyMembersInputs");
+
+router.post("/", verifyToken, verifyInputs, errorhandler, createMember);
 
 module.exports = router;
