@@ -1,23 +1,19 @@
 const db = require('../models/index');
 
-const findId = async (id) => {
-    return await db.News.findOne({
-        where: {
-            id: id
-        }
-    });
-}
+const updateNewsService = async (id, dataNews) => {
 
-const updateNewsService = async (name,content,image) => {
+    const { name, content, image } = dataNews;
 
     const update = await db.News.update({
-        name,content,image
-    },{
-        where : {id}
-    });
+        name,
+        content,
+        image
+        },{
+            where : {id}
+        });
 
     return update;
 
 }
 
-module.exports = {findId, updateNewsService};
+module.exports = {updateNewsService};

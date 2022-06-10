@@ -1,4 +1,4 @@
-const {updateNewsService, findId} = require('../services/news');
+const {updateNewsService,findId} = require('../services/news');
 
 const updateNews = async (req, res) => {
     try{
@@ -14,9 +14,8 @@ const updateNews = async (req, res) => {
                 news
             })
         }
-        console.log(news);
-        
-        const update = await updateNewsService(name, content, image);
+
+        const update = await updateNewsService(id,{name, content, image});
 
         if(name){
             update.name = name;
@@ -27,12 +26,10 @@ const updateNews = async (req, res) => {
         if(image){
             update.image = image;
         }
-
-        console.log(dataNews);
         
         res.status(200).json({
             message: 'Noticia actualizada',
-            data: update
+            data: news
         });
 
     }catch(error){
