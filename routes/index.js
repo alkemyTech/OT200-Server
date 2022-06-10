@@ -6,6 +6,7 @@ const categoriesRouter = require('./categories');
 const commentsRouter = require('./comments');
 const slidesRouter = require('./slides');
 const testimonialsRouter = require('./testimonials');
+const postRouter = require('./post');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -21,6 +22,7 @@ router.use('/comments', commentsRouter);
 router.use('/slides', slidesRouter);
 router.use('/testimonials', testimonialsRouter);
 router.use('/categories', categoriesRouter);
+router.use('/post', postRouter);
 
 
 module.exports = router;
