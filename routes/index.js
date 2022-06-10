@@ -7,6 +7,8 @@ const commentsRouter = require('./comments');
 const slidesRouter = require('./slides');
 const testimonialsRouter = require('./testimonials');
 const newsRouter = require('./news');
+const activitiesRouter = require('./activities')
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -18,10 +20,11 @@ router.use('/users', usersRouter);
 router.use('/auth', authRouter);
 router.use('/members', membersRouter);
 router.use('/categories', categoriesRouter);
+router.use('/news', newsRouter);
 router.use('/comments', commentsRouter);
 router.use('/slides', slidesRouter);
 router.use('/testimonials', testimonialsRouter);
-router.use('/news', newsRouter);
+router.use('/activities',activitiesRouter)
 
 
 module.exports = router;

@@ -1,5 +1,4 @@
-const create = require("../services/news");
-const findId = require('../services/news');
+const { create, findId } = require("../services/news");
 
 const createNews = async (req, res) => {
     try {
@@ -11,7 +10,7 @@ const createNews = async (req, res) => {
 
     } catch (error) {
         res.status(500).json({
-            message: "Error al crear noticia",
+            message: error.message,
             error
         });
     }
