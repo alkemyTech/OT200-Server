@@ -13,7 +13,7 @@ router.get(
 
 router.delete(
   "/:id",
-  // verifyToken,
+  verifyToken,
   deleteOneMember
 )
 
