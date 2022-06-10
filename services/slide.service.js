@@ -9,4 +9,21 @@ const createSlide = async (slide) => {
     return await slideModel.create(slide);
 }
 
-module.exports = { slideCount, createSlide };
+
+
+const destroySlide = async( id ) => {
+    
+    
+    const slide = await slideModel.findByPk(id);
+
+    
+    if( !slide ) throw {message: `El slide con id: -${id}- no se encuentra en DB`, status:400};
+
+    
+    await slide.destroy();
+
+    return;
+
+};
+
+module.exports = { slideCount, createSlide, destroySlide };
