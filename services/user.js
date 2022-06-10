@@ -16,6 +16,16 @@ const create = async (data) =>{
 
 }
 
-module.exports = create
+const findAll = async() => {
+
+    const users = await db.User.findAll();
+
+    return users;
+}
+
+module.exports = {
+    create,
+    findAll,
+}
 
 
