@@ -11,4 +11,13 @@ const create = async (dataNews) => {
         return news;
 }
 
-module.exports = create;
+
+const findId = async (id) => {
+    
+    const news = await db.News.findByPk(id);
+    
+    return news
+
+}
+
+module.exports = findId, create;
