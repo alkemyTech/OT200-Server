@@ -5,8 +5,9 @@ const userToken = require('../middleware/userToken');
 
 const createUser = async (req, res) => {
     try {
-
         const data = req.body;
+        data.roleId = 2;
+
         const newUser = await create(data)
         
         return res.status(201).json(newUser);
@@ -29,6 +30,7 @@ const loginUser = async (req, res) => {
         if(!user){
             return res.status(404).json({message: 'Usuario no encontrado', ok: false});
         }
+        
         const isValidPassword = bcrypt.compareSync(password, user.password);
         
         if(!isValidPassword) res.status(401).json({message: 'Contraseña incorrecta', ok: false})
@@ -42,7 +44,7 @@ const loginUser = async (req, res) => {
         });   
     }catch(error){
         return res.status(500).json({
-            message: 'Error',
+            message: error.message,
             data: error
         });
     }

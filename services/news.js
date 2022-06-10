@@ -20,4 +20,7 @@ const findId = async (id) => {
 
 }
 
-module.exports = findId, create;
+module.exports = {
+    findId,
+    create,
+}
