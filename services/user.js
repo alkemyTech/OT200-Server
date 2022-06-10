@@ -5,8 +5,6 @@ const create = async (data) =>{
 
     const hash = await bcrypt.hash(data.password, 10);
 
-    console.log(`LOG: ${data.roleId}`);
-
     const newUser = await db.sequelize.models.User.create({
         ...data,
         password: hash,
