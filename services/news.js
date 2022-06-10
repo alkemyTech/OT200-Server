@@ -1,4 +1,16 @@
-const db = require('../models/index');
+const db = require("../models/index");
+
+const create = async (dataNews) => {
+            
+        const news = await db.News.create(dataNews);
+
+       if(!news) {
+            throw new Error("Error al crear noticia");
+        }
+
+        return news;
+}
+
 
 const findId = async (id) => {
     
@@ -8,4 +20,4 @@ const findId = async (id) => {
 
 }
 
-module.exports = findId;
+module.exports = findId, create;

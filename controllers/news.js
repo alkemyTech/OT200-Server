@@ -1,4 +1,21 @@
-const findId = require('../services/news.js');
+const create = require("../services/news");
+const findId = require('../services/news');
+
+const createNews = async (req, res) => {
+    try {
+        const dataNews = req.body;
+
+        const news = await create(dataNews);
+
+        res.status(201).json(news);
+
+    } catch (error) {
+        res.status(500).json({
+            message: "Error al crear noticia",
+            error
+        });
+    }
+}
 
 const detailNews = async (req, res) => {
     try{
@@ -26,4 +43,4 @@ const detailNews = async (req, res) => {
 }
 
 
-module.exports = {detailNews};
+module.exports = {createNews, detailNews};
