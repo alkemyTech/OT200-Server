@@ -18,7 +18,6 @@ const allCommentsFromPost = async( id ) => {
         },
     });
 
-    if( comments == '' ) throw { message:'No se encontraron comentarios en este post', status: 400 }
 
     return comments;
 
