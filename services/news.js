@@ -1,5 +1,6 @@
 const db = require("../models/index");
 
+
 const create = async (dataNews) => {
             
         const news = await db.News.create(dataNews);
@@ -20,7 +21,15 @@ const findId = async (id) => {
 
 }
 
+const deleteOne = async (id) => {
+
+    const news = await db.News.destroy({ where: {id}});
+
+    return news;
+}
+
 module.exports = {
     findId,
     create,
+    deleteOne
 }

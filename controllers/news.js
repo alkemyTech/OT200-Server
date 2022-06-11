@@ -1,4 +1,4 @@
-const { create, findId } = require("../services/news");
+const { create, findId, deleteOne } = require("../services/news");
 
 const createNews = async (req, res) => {
     try {
@@ -41,5 +41,46 @@ const detailNews = async (req, res) => {
 
 }
 
+const deleteNews = async (req, res) => {
 
-module.exports = {createNews, detailNews};
+    const id = req.params.id;
+
+    try {
+
+        const newsDb = await findId(id);
+
+        if (newsDb === null) {
+            
+            return res.status(404).json({
+                message: "News not found",
+                newsDb
+            })
+
+        } else {
+            
+            const deletedNew = await deleteOne(id);
+
+            return res.status(200).json({
+                message: "Deleted",
+                id: id
+            })
+
+        }
+        
+    } catch (error) {
+        
+        res.status(500).json({
+            error: true,
+            message: "An error has ocurred"
+        })
+
+    }
+
+}
+
+
+module.exports = {
+    createNews, 
+    detailNews,
+    deleteNews
+    };
