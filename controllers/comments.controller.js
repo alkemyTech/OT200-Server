@@ -1,5 +1,5 @@
 const { request, response} = require('express');
-const { createComment } = require('../services/comment');
+const { createComment, findId, deleteOne } = require('../services/comment');
 
 const getComments = ( req = request, res = response )=> {
 
@@ -23,9 +23,51 @@ const newComment = async(req = request, res = response ) => {
 
 };
 
+const deleteComment = async (req, res) => {
+
+    const id = parseInt(req.params.id)
+
+    try {
+
+        // const id = parseInt(req.params.id);
+
+        const commentDb = await findId(id);
+
+        if (commentDb === null) {
+            
+            return res.status(404).json({
+                message: "Comment not found",
+                commentDb
+            })
+
+        } else {
+            
+            const deletedComment = await deleteOne(id);
+
+            return res.status(200).json({
+                message: "Deleted",
+                id: id
+            })
+
+        }
+
+        
+    } catch (error) {
+        
+        console.log(error)
+        return res.status(500).json({
+            error:true,
+            message: "An error has ocurred"
+        })
+
+    }
+
+}
+
 
 
 module.exports = {
     getComments,
     newComment,
+    deleteComment
 }
