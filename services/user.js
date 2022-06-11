@@ -17,23 +17,25 @@ const create = async (data) =>{
 
 }
 
-const getOne = async (id) => { // LO HAGO PARA TRAER LOS DATOS DEL USUARIO PREVIO A LA ACTUALIZACIÓN
-    const userDb = await db1.User.findAll(
-        {
-        where: {
-            id: id
-        }
-    }
-    );
-
-    return userDb;
+const findId = async (id) => {
+    
+    const userDb = await db.User.findByPk(id);
+    
+    return userDb
 
 }
 
 const update = async (user, id) => {
 
-    const userUp = await db.User.update({firstName: user.firstName, lastName: user.lastName,
-        email: user.email, password: user.password, photo: user.photo},
+    const {firstName, lastName, email, password, photo} = user;
+
+    const userUp = await db.User.update({
+        firstName,
+        lastName,
+        email,
+        password,
+        photo
+    },
     {
         where: {
             id: id
@@ -47,7 +49,7 @@ const update = async (user, id) => {
 module.exports = {
     create,
     update,
-    getOne
+    findId
 }
 
 

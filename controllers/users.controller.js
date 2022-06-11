@@ -1,5 +1,5 @@
 const update = require('../services/user').update;
-const getOne = require('../services/user').getOne;
+const getOne = require('../services/user').findId;
 
 
 
