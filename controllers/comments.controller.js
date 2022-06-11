@@ -32,15 +32,14 @@ try {
 
     const comments = await allCommentsFromPost( id );
 
+    if( comments == '' ) return res.status(200).json({ error: false, message:'No se encontraron comentarios en este post', comments});
+
     res.status(200).json({ error: false, message:'ok', comments});
     
 } catch (error) {
 
-    if( !error.status ) {
-        return res.status(500).json({ error: true, message: 'Error en el servidor, comuniquese con el administrador', comments: null});
-    }
-
-    res.status(error.status).json({  error: true, message: error.message, comments: null });
+    res.status(500).json({ error: true, message: 'Error en el servidor: ' + error.message, comments: null});
+    
 }
 };
 
