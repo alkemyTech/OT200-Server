@@ -1,4 +1,4 @@
-const create = require("../services/testimonial");
+const {create, deleteOne} = require("../services/testimonial");
 
 const getAllTestimonials = (req, res) => {};
 
@@ -24,7 +24,37 @@ const createTestimonial = async (req, res) => {
 
 const updateTestimonial = (req, res) => {};
 
-const deleteTestimonial = (req, res) => {};
+const deleteTestimonial = async (req, res) => {
+    try {
+        
+        const id = req.params.id;
+
+        const result = await deleteOne(id);
+
+        if (result === 0) {
+
+            return res.status(404).json({
+                error: true,
+                message: "Testimonial not found"
+            })
+
+        } else {
+            
+            return res.json({
+                message: "Deleted",
+                id: id
+            })
+        }
+
+    } catch (error) {
+        
+        return res.status(500).json({
+            error: true,
+            message: "An error has ocurred"
+        })
+
+    }
+};
 
 module.exports = {
     getAllTestimonials,
