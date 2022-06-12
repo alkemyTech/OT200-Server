@@ -8,4 +8,12 @@ const create = async (data) =>{
 
 }
 
-module.exports = create
+const find = async (offset, limit) => {
+    
+    const testimonials = await db.Testimonial.findAndCountAll({ offset, limit })
+
+    return testimonials;
+
+}
+
+module.exports = {create, find}
