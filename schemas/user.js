@@ -1,4 +1,4 @@
-const db = require("./../models/");
+const { findByEmail } = require("../services/user");
 
 const registrationSchema = {
     firstName: {
@@ -53,13 +53,12 @@ const registrationSchema = {
         },
         normalizeEmail: true,
         custom: {
+            
             options: async (email) => {
-                const result = await db.sequelize.models.User.findOne({
-                    where: { email },
-                });
-                if (result) {
-                    throw new Error("Email already in use");
-                }
+
+                const result = await findByEmail(email);
+
+                if (result) throw new Error("Email already in use");
             },
         },
     },

@@ -5,10 +5,9 @@ const userToken = require('../middleware/userToken');
 
 const createUser = async (req, res) => {
     try {
-        const data = req.body;
-        data.roleId = 2;
+        const { body } = req;
 
-        const newUser = await create(data)
+        const newUser = await create(body);
         
         return res.status(201).json(newUser);
 

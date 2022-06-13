@@ -5,9 +5,10 @@ const create = async (data) =>{
 
     const hash = await bcrypt.hash(data.password, 10);
 
-    const newUser = await db.sequelize.models.User.create({
+    const newUser = await db.User.create({
         ...data,
         password: hash,
+        roleId: 2
     });
 
     delete newUser.dataValues.password;
@@ -23,9 +24,17 @@ const findAll = async() => {
     return users;
 }
 
+const findByEmail = async (email) => {
+
+    const user = await db.User.findOne({ where: { email } });
+
+    return user;
+}
+
 module.exports = {
     create,
     findAll,
+    findByEmail
 }
 
 
