@@ -15,8 +15,6 @@ const createUser = async (req, res) => {
 
         const newUser = await create(data)
 
-        // en la funcion welcomeMail agregar los parametros emailTitle=data.firstName, emailText, contactInfo, email y subject.
-        
         return res.status(201).json(newUser);
 
     } catch (error) {
