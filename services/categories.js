@@ -9,7 +9,7 @@ const deleteOne = async (id) => {
 
 const findAll = async() => {
     
-    const category = await db.Category.findAll({attributes: 'name'});
+    const category = await db.Categories.findAll({attributes: ['name']});
 
     return category;
 }
