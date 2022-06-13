@@ -14,7 +14,7 @@ const createUser = async (req, res) => {
         const data = req.body;
         data.roleId = 2;
 
-        const newUser = await create(data)
+        const newUser = await create(data);
 
         const emailTitle = `Bienvenido ${newUser.name}`;
 
@@ -29,7 +29,7 @@ const createUser = async (req, res) => {
     } catch (error) {
 
         return res.status(500).json({
-            error: true,
+            error: error.message,
             message: "Something was wrong",
         });
     }
