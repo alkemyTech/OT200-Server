@@ -7,13 +7,15 @@ const checkAdmin = require('../middleware/checkAdmin');
 
 const { categoriesFields } = require('../helpers');
 const validatorHandler = require('../middleware/validatorHandler');
-const { newCategory, deleteCategory } = require('../controllers/categories');
+const { newCategory, deleteCategory, CategoriesList } = require('../controllers/categories');
 
 
 router.post('/',verifyToken , checkAdmin, validatorHandler( categoriesFields ), newCategory);
 
 
 router.get("/", verifyToken, checkAdmin, getCategories);
+
+router.get("/catalogue", verifyToken, CategoriesList);
 
 router.delete(
   "/:id",
