@@ -1,3 +1,5 @@
+const ejs = require('ejs');
+const path = require('path');
 
 const welcomeMail = async (emailTitle, emailText, contactInfo) => {
 
