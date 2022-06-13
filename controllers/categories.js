@@ -57,7 +57,7 @@ const getAllCategories = async (req, res) => {
         res.json(categories);
 
     } catch (error) {
-        res.json(error);
+        res.status(500).json(error.message);
     }
 
 
