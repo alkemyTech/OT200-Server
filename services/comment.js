@@ -15,7 +15,7 @@ const getAll = async () => {
 
 const createComment = async( data ) => {
 
-    const comment = new db.Comments ( data );
+    const comment = new db.Comment ( data );
 
     await comment.save();
 
@@ -25,7 +25,7 @@ const createComment = async( data ) => {
 
 const allCommentsFromPost = async( id ) => {
 
-    const comments = await DB.findAll({
+    const comments = await db.Comment.findAll({
         where: {
           post_id: id,
         },
