@@ -32,7 +32,7 @@ try {
 
     const comments = await allCommentsFromPost( id );
 
-    if( comments == '' ) return res.status(200).json({ error: false, message:'No se encontraron comentarios en este post', comments});
+    if( comments.length === 0  ) return res.status(200).json({ error: false, message:'No se encontraron comentarios en este post', comments});
 
     res.status(200).json({ error: false, message:'ok', comments});
     
