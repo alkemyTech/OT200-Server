@@ -7,7 +7,6 @@ const commentsRouter = require('./comments');
 const slidesRouter = require('./slides');
 const testimonialsRouter = require('./testimonials');
 const postRouter = require('./post');
-const commentsRouter = require('./comments');
 const newsRouter = require('./news');
 const activitiesRouter = require('./activities')
 
@@ -28,7 +27,6 @@ router.use('/slides', slidesRouter);
 router.use('/testimonials', testimonialsRouter);
 router.use('/categories', categoriesRouter);
 router.use('/post', postRouter);
-router.use('/comments', commentsRouter);
 router.use('/news', newsRouter);
 router.use('/activities',activitiesRouter)
 
