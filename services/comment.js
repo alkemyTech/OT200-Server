@@ -1,8 +1,21 @@
-const { Comment:DB } = require('../models')
+const db = require('../models');
+
+const getAll = async () => {
+
+    const comments = await db.Comment.findAll({
+        attributes: ['body'],
+        order: [
+            ['createdAt', 'DESC']
+        ] 
+    });
+
+    return comments;
+
+}
 
 const createComment = async( data ) => {
 
-    const comment = new DB( data );
+    const comment = new db.Comments ( data );
 
     await comment.save();
 
@@ -26,5 +39,6 @@ const allCommentsFromPost = async( id ) => {
 
 module.exports = {
     createComment,
-    allCommentsFromPost
+    allCommentsFromPost,
+    getAll,
 }
