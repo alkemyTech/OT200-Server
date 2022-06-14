@@ -14,18 +14,7 @@ const welcomeMail = async ( email, subject) => {
       html: templateEmail,
     };
 
-    //ES8
-    (async () => {
-      try {
-        await sgMail.send(msg);
-      } catch (error) {
-        console.error(error);
-
-        if (error.response) {
-          console.error(error.response.body)
-        }
-      }
-    })();
+  await sgMail.send(msg);   
 }
 
 module.exports = {welcomeMail};
