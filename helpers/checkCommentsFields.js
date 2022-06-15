@@ -7,9 +7,9 @@ const commentsFields = [
 ];
 
 const updateFields = [
-  check("user_id", "Please introduce a valid user_id").not().notEmpty(),
-  check("post_id", "Please introduce a valid post_id").notEmpty(),
-  check("body", "Please introduce a update data").notEmpty().isString(),
+  check("user_id", "Please introduce a valid user_id").notEmpty().isNumeric(),
+  check("post_id", "Please introduce a valid post_id").notEmpty().isNumeric(),
+  check("body", "Please introduce a valid body").notEmpty().isString(),
 ];
 
 module.exports = { commentsFields, updateFields };
