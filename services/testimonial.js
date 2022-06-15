@@ -8,4 +8,21 @@ const create = async (data) =>{
 
 }
 
-module.exports = create
+const testimonalUpdate = async (body, testimonialId) => {
+    const testimonial = await db.Testimonial.update(
+        { body },
+        {
+            where: {
+                id: parseInt(testimonialId),
+            },
+        }
+    );
+
+    if (!testimonial) {
+        return { success: false, message: "testimonial not found" };
+    } else {
+        return testimonial;
+    }
+}
+
+module.exports = { create, testimonalUpdate }
