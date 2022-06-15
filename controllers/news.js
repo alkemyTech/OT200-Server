@@ -48,6 +48,7 @@ const deleteNews = async (req, res) => {
     try {
 
         const newsDb = await findId(id);
+        console.log(newsDb);
 
         if (newsDb === null) {
             
@@ -56,16 +57,13 @@ const deleteNews = async (req, res) => {
                 newsDb
             })
 
-        } else {
-            
-            const deletedNew = await deleteOne(id);
+        }
+        const deletedNew = await deleteOne(id);
 
             return res.status(200).json({
                 message: "Deleted",
                 id: id
             })
-
-        }
         
     } catch (error) {
         
