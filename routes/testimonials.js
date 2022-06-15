@@ -7,6 +7,7 @@ const { checkSchema } = require("express-validator");
 const testimonialSchema = require("../schemas/testimonial");
 const verifyToken = require("./../middleware/verifyToken")
 const checkAdmin = require("../middleware/checkAdmin");
+const testimonialsFields = require("../helpers/checkTestimonials");
 
 router.post(
     "/",
@@ -17,6 +18,11 @@ router.post(
 );
 
 
-router.put("/:id",verifyToken,checkAdmin,updateTestimonial)
+router.put("/:id",
+    verifyToken,
+    checkAdmin,
+    validatorHandler(testimonialsFields),
+    updateTestimonial
+)
 
 module.exports = router;
