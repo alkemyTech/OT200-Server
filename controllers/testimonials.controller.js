@@ -1,4 +1,4 @@
-const create = require("../services/testimonial");
+const { create, testimonalUpdate } = require("../services/testimonial");
 
 const getAllTestimonials = (req, res) => {};
 
@@ -22,7 +22,15 @@ const createTestimonial = async (req, res) => {
     }
 };
 
-const updateTestimonial = (req, res) => {};
+const updateTestimonial = (req, res) => {
+    const { id } = req.params;
+    try {
+        const testimonial = await testimonalUpdate (req.body, id);
+        return res.status(testimonial.id ? 200 : 404).json(testimonial);
+    } catch (error) {
+        return res.status(500).json(error.message);
+    }
+};
 
 const deleteTestimonial = (req, res) => {};
 
