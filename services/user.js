@@ -25,16 +25,14 @@ const findId = async (id) => {
 
 }
 
-const update = async (user, id) => {
+const update = async (body, id) => {
 
-    const {firstName, lastName, email, password, photo} = user;
-
-    const userUp = await db.User.update({
-        firstName,
-        lastName,
-        email,
-        password,
-        photo
+    const userUpdated = await db.User.update({
+        firstName: body.firstName,
+        lastName: body.lastName,
+        email: body.email,
+        password: body.password,
+        photo: body.photo
     },
     {
         where: {
@@ -42,7 +40,7 @@ const update = async (user, id) => {
         }
     }
     );
-    return userUp;
+    return userUpdated;
 
 }
 

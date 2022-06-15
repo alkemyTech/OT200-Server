@@ -9,8 +9,6 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-router.patch('/:id', 
-// verifyToken, SE COMENTA ESTA LINEA PARA REALIZAR PRUEBA
-update);
+router.patch('/:id', verifyToken, update);
 
 module.exports = router;
