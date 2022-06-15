@@ -11,6 +11,15 @@ const create = async (dataNews) => {
         return news;
 }
 
+const findAll = async (offset, limit) => {
+
+    const news = await db.News.findAll({
+        offset,
+        limit
+    });
+
+    return news;
+}
 
 const findId = async (id) => {
     
@@ -20,7 +29,10 @@ const findId = async (id) => {
 
 }
 
+
+
 module.exports = {
     findId,
     create,
+    findAll
 }
