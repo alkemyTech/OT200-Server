@@ -24,7 +24,7 @@ const destroySlide = async (id) => {
 
 const getSlides = async () => {
   const slides = await slideModel.findAll({
-    attributes: ["imagenURL", "order"],
+    attributes: ["imagenURL", "order", "organizationId"],
   });
   return slides;
 };
