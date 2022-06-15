@@ -7,7 +7,7 @@ const updatedOrganizationData = async(req, res) => {
 
     try {
         
-        const newData = await updatedPublicData(params.id, { 
+         await updatedPublicData(params.id, { 
             name, 
             image, 
             email, 
@@ -17,7 +17,7 @@ const updatedOrganizationData = async(req, res) => {
             linkedinUrl 
         });
     
-        res.status(200).json({error: false, message: 'ok', data:newData});
+        res.status(200).json({error: false, message: 'El registro se actualizo exitosamente'});
         
     } catch (error) {
 
