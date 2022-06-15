@@ -9,6 +9,7 @@ const testimonialsRouter = require('./testimonials');
 const postRouter = require('./post');
 const newsRouter = require('./news');
 const activitiesRouter = require('./activities')
+const organizationsRouter = require('./organizations')
 
 
 /* GET home page. */
@@ -29,6 +30,7 @@ router.use('/categories', categoriesRouter);
 router.use('/post', postRouter);
 router.use('/news', newsRouter);
 router.use('/activities',activitiesRouter)
+router.use('/organizations',organizationsRouter)
 
 
 module.exports = router;
