@@ -1,0 +1,11 @@
+const { check } = require('express-validator');
+
+
+const bodyrequest = [
+    check('name', 'El campo post_id es obligatorio').isString().notEmpty(),
+    check('description', 'El campo user_id es obligatorio').isString().notEmpty(),
+    check('image', 'El campo body es obligatorio').isString().notEmpty(),
+];
+
+
+module.exports = bodyrequest;
