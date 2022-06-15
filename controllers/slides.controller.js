@@ -47,4 +47,9 @@ const deleteSlide = async(req,res) => {
  }
 };
 
-module.exports = { createNewSlide, deleteSlide };
+
+const updateSlide = async (req, res) => {
+  
+}
+
+module.exports = { createNewSlide, deleteSlide,updateSlide };
