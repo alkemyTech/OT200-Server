@@ -33,6 +33,10 @@ const updateNewsService = async (id, dataNews) => {
             where : {id}
         });
 
+    if(update == 0) {
+        throw new Error("Error al actualizar noticia");
+    }
+    
     return update;
 
 }

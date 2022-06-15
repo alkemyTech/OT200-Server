@@ -1,4 +1,4 @@
-const {create,updateNewsService,findId} = require('../services/news');
+const {create, updateNewsService, findId} = require('../services/news');
 
 
 const createNews = async (req, res) => {
@@ -48,35 +48,18 @@ const updateNews = async (req, res) => {
 
         const {name, content, image} = req.body;
 
-        const news = await findId(id);
-
-        if(!news){
-            return res.status(404).json({
-                message: 'News not found',
-                news
-            })
-        }
-
         const update = await updateNewsService(id,{name, content, image});
-
-        if(name){
-            update.name = name;
-        }
-        if(content){
-            update.content = content;
-        }
-        if(image){
-            update.image = image;
-        }
         
         res.status(200).json({
             message: 'Noticia actualizada',
-            data: news
+            data: update,
+            newData: { name, content, image }
+
         });
 
     }catch(error){
         res.status(500).send({
-            message: 'Error al actualizar la noticia "Catch"',
+            message: error.message,
         });
         console.log(error);
     }
