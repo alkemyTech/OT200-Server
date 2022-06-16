@@ -3,10 +3,6 @@ const findUser = require('../services/auth');
 const bcrypt = require('bcrypt');
 const userToken = require('../middleware/userToken');
 
-// const subject = "Bienvenidos a la ONG Somos Más";
-// const emailText = "Hola, te damos la bienvenida a la ONG Somos Más, esperamos que disfrutes de nuestros servicios.";
-// const contactInfo = "Para contactar con nosotros, puedes enviarnos un correo a: somosfundacionmas@gmail.com, Instagram: @somosfundacionmas, Facebook: Somos_Más, o por teléfono: 1160112988";
-
 
 const createUser = async (req, res) => {
     try {
