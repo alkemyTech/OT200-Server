@@ -12,14 +12,17 @@ const createUser = async (req, res) => {
 
         const newUser = await create(data);
 
-        const emailTitle = `Bienvenido ${newUser.name}`;
+        const emailTitle = `Bienvenido ${newUser.firstName}`;
+
+        const email = newUser.email;
 
         if(newUser){
-            welcomeMail(subject, emailText, contactInfo, newUser.email, emailTitle)
+            welcomeMail(emailTitle, email);
+            
             return res.status(201).json({
                 message: 'Usuario creado',
-                newUser
-            });
+                data: newUser
+            })
         }
 
     } catch (error) {
