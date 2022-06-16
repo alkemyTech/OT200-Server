@@ -19,26 +19,33 @@ const createNews = async (req, res) => {
 const findAllNews = async (req, res) => {
     try {
         const limit = 10;
-
+        
         const page = parseInt(req.query.page)
 
         const offset = page > 0 ? (page - 1) * limit : 0;
     
-        const pagePrev = (page - 1);
+        const prevPage = (page - 1);
 
-        const pageNext = (page + 1);        
+        const nextPage = (page + 1);        
 
         const news = await findAll(offset, limit);
 
-        const count = news.length;
-       
+        const {count} = news
+        
+        const totalPages = Math.ceil(count / limit);
 
+        if(totalPages < page || page < 1){
+            return res.status(404).json({
+                message: "No existe la página solicitada"
+            })
+        }
+       
         res.status(200).json({
-            pagePrev : `${ pagePrev <= 0 ? 'No hay pagina previa' : 'http://localhost:3000/news?page=' + pagePrev }`,
-            pageNext : `${  pageNext > count ? 'No hay pagina siguiente' : 'http://localhost:3000/news?page=' + pageNext }`,
+            prevPage : `${ prevPage <= 0 ? 'No hay página previa' : 'http://localhost:3000/news?page=' + prevPage }`,
+            currentPage: page,
+            nextPage : `${  nextPage > totalPages  ? 'No hay página siguiente' : 'http://localhost:3000/news?page=' + nextPage }`,
             news,
-            page,
-            count
+            totalPages
         });
    
     } catch (error) {

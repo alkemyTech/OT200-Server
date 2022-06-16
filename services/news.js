@@ -13,7 +13,7 @@ const create = async (dataNews) => {
 
 const findAll = async (offset, limit) => {
 
-    const news = await db.News.findAll({
+    const news = await db.News.findAndCountAll({
         offset,
         limit
     });
