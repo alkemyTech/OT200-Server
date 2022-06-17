@@ -2,17 +2,14 @@
 
 const demoUsers = require("../helpers/usersInfo");
 const bcrypt = require("bcrypt");
-async function encripted(user) {
-  const hash = await bcrypt.hash(user.password, 10);
-  return hash;
-}
-demoUsers.forEach((user) => {
-  user.password = encripted(user);
+const newUsers = demoUsers.map((user) => {
+  user.password = bcrypt.hashSync(user.password, 10);
+  return user;
 });
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkInsert("Users", demoUsers, {});
+    await queryInterface.bulkInsert("Users", newUsers, {});
   },
 
   down: async (queryInterface, Sequelize) => {
