@@ -8,17 +8,21 @@ let token = generateToken(user);
 const members = [];
 
 describe("GET/members", () => {
+
 test('Debera mostrar un listado con todos los miembros, status:200', (done) => {
-     request(app)
+
+    request(app)
     .get('/members')
     .set('x-access-token', token)
     .set('Accept', 'application/json')
     .expect('Content-Type', /json/)
     .expect(200, done)
     .expect(members)
+
  });
 
  test('No se ah enviado el token de autenticación, status:401', (done) => {
+
     request(app)
     .get('/members')
     .set('x-access-token', '')
@@ -26,10 +30,13 @@ test('Debera mostrar un listado con todos los miembros, status:200', (done) => {
     .expect('Content-Type', /json/)
     .expect(401, done)
     .expect({ error: "No se ha enviado el token de autenticación"})
+
   });
 
   test('Token invalido, status:400', (done) => { 
+
     token = '12345'
+
     request(app)
     .get('/members')
     .set('x-access-token', token )
@@ -37,6 +44,22 @@ test('Debera mostrar un listado con todos los miembros, status:200', (done) => {
     .expect('Content-Type', /json/)
     .expect(400, done)
     .expect({ message: "Token invalido" })
+    
   });
+
+  test('No tiene los permisos de adminitrador, status:403', ( done ) => { 
+
+    user.roleId = 2;
+    const token = generateToken(user);
+
+    request(app)
+    .get('/members')
+    .set('x-access-token', token )
+    .set('Accept', 'application/json')
+    .expect('Content-Type', /json/)
+    .expect(403, done)
+    .expect({  msg: 'No tiene los permisos necesarios para acceder a esta información, comuniquese con admisntración'})
+
+   });
 
 });
