@@ -7,14 +7,18 @@ const {
   commentsFields,
   updateFields,
 } = require("../helpers/checkCommentsFields");
-const { newComment } = require("../controllers/comments.controller");
-const checkOwnership = require("../middleware/checkOwnership");
+const {
+  newComment,
+  updateComment,
+} = require("../controllers/comments.controller");
+
+const verifyOwner = require("../middleware/verifyComment");
 
 router.post("/", verifyToken, validatorHandler(commentsFields), newComment);
 router.put(
   "/:id",
   verifyToken,
-  checkOwnership,
+  verifyOwner,
   validatorHandler(updateFields),
   updateComment
 );

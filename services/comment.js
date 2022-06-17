@@ -25,7 +25,13 @@ const changeComment = async (body, commentId) => {
   }
 };
 
+const findComment = async (idComment) => {
+  const comment = await DB.findOne({ where: { id: parseInt(idComment) } });
+  return comment;
+};
+
 module.exports = {
   createComment,
   changeComment,
+  findComment,
 };

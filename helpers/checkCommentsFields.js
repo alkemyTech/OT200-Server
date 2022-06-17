@@ -7,7 +7,7 @@ const commentsFields = [
 ];
 
 const updateFields = [
-  check("user_id", "Please introduce a valid user_id").notEmpty().isNumeric(),
+  check("user_id", "the user id can't not be change").not().exists(),
   check("post_id", "Please introduce a valid post_id").notEmpty().isNumeric(),
   check("body", "Please introduce a valid body").notEmpty().isString(),
 ];
