@@ -3,21 +3,19 @@
 const demoUsers = require("../helpers/usersInfo");
 const bcrypt = require("bcrypt");
 async function encripted(user) {
-  user.password = await bcrypt.hash(user.password, 10);
+  const hash = await bcrypt.hash(user.password, 10);
+  return hash;
 }
-const hashedUsers = demoUsers.forEach(encripted);
+demoUsers.forEach((user) => {
+  user.password = encripted(user);
+});
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkInsert("Users", hashedUsers, {});
+    await queryInterface.bulkInsert("Users", demoUsers, {});
   },
 
   down: async (queryInterface, Sequelize) => {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
+    await queryInterface.bulkDelete("Users", null, {});
   },
 };
