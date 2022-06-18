@@ -1,0 +1,176 @@
+tags:
+  - name: members
+    description: Everything about your members
+
+components:
+  schemas:
+    Member:
+      type: object
+      properties:
+        name:
+          type: string
+          description: the name of a member.
+        facebookUrl: 
+          type: string
+          description: member's facebook address.
+        instagramUrl: 
+          type: string
+          description: member's instagram address.
+        linkedinUrl:
+          type: string
+          description: member's linkedin address.
+        image: 
+          type: string
+          description: image of a member.
+        description:
+          type: string
+          description: member description.
+      required:
+        - name
+        - image
+      example:
+        name: Jhon
+        facebookUrl: https://facebook.com/jhon
+        instagramUrl: https://instagram.com/jhon
+        linkedinUrl: https://linkendin.com/jhon
+        description: This is Jhon.
+        image: https://images.com/jhon
+    MemberNotFound:
+      type: object
+      properties:
+        message:
+          type: string  
+          description: A message for not found member.
+      example:
+        error: true
+        message: Member not found.
+    MemberDeleted:
+      type: object
+      properties:
+        message: 
+          type: string
+          description: A member was deleted.
+      example:
+        message: Deleted.
+        id: 1
+    ServerError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A message for a error server.
+      example:
+        error: true
+        message: Something went wrong.
+    BadRequest:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Some fields are required.
+      example:
+        msg: Please enter a valid input
+        param: name
+        location: body
+
+  securitySchemes:
+    xAccessTokenAuth:
+      type: apiKey
+      in: header
+      name: x-access-token
+
+  parameters:
+    memberId:
+      in: path
+      name: id
+      required: true
+      schema: 
+        type: number
+      description: the member id.
+
+security:
+  - xAccessTokenAuth: []
+    
+paths:
+  /members:
+    get:
+      security:
+      - xAccessTokenAuth: []
+      summary: Returns a list of members.
+      tags:
+        - members
+      responses:
+        200: 
+          description: A JSON array of user members
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  $ref: '#/components/schemas/Member'
+    post:
+      security:
+      - xAccessTokenAuth: [] 
+      summary: Create a new member.
+      tags:
+        - members
+      requestBody: 
+        required: true
+        content: 
+          application/json:
+            schema:
+              $ref: '#components/schemas/Member'
+      responses:
+        201:
+          description: The member was successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Member'
+        400:
+          description: Invalid operation to create a new member.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        500:
+          description: Something went wrong.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+
+  /members/{id}:
+    delete:
+      security:
+      - xAccessTokenAuth: []
+      summary: Delete a member by id.
+      tags:
+        - members
+      parameters:
+        - $ref: '#/components/parameters/memberId'
+      responses:
+        200:
+          description: The member was deleted.
+          content:
+            application/json:
+              schema:
+              $ref: '#/components/schemas/MemberDeleted'
+        404:
+          description: The member was not found.
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemberNotFound'
+        500:
+          description: Something went wrong.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+
+
+
+  
+        
+
