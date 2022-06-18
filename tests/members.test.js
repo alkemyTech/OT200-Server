@@ -11,7 +11,7 @@ const tokenNull = '12345';
 
 describe('POST/members', () => {
 
-  test('Debera crear un member, status: 201', ( done ) => {
+  test('Debera crear un miembro, status: 201', ( done ) => {
 
       request(app)
       .post('/members')
@@ -61,7 +61,6 @@ describe('POST/members', () => {
   });
 
   test('Token invalido, status:400', (done) => { 
-
 
       request(app)
       .post('/members')
@@ -117,7 +116,6 @@ test('Debera mostrar un listado con todos los miembros, status:200', (done) => {
 
   test('Token invalido, status:400', (done) => { 
 
-
     request(app)
     .get('/members')
     .set('x-access-token', tokenNull )
@@ -153,5 +151,69 @@ test('Debera mostrar un listado con todos los miembros, status:200', (done) => {
 
 });
 
+describe('DELETE/members/:id', () => {
 
+  test('No se ah enviado el token de autenticación, status:401', (done) => {
+
+    request(app)
+    .delete('/members/1')
+    .set('x-access-token', '')
+    .set('Accept', 'application/json')
+    .expect('Content-Type', /json/)
+    .expect(401)
+    .expect({ error: "No se ha enviado el token de autenticación"})
+    .end((err, res) =>  {
+      if (err) return done(err);
+      return done();
+    });
+
+  });
+
+  test('Token invalido, status:400', (done) => { 
+
+    request(app)
+    .delete('/members/1')
+    .set('x-access-token', tokenNull )
+    .set('Accept', 'application/json')
+    .expect('Content-Type', /json/)
+    .expect(400)
+    .expect({ message: "Token invalido" })
+    .end((err, res) =>  {
+      if (err) return done(err);
+      return done();
+    });
+
+  });
+
+  test('El miembro no existe en DB, status 404', ( done ) => { 
+
+    request(app)
+      .delete('/members/ABC123')
+      .set('x-access-token', token)
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect(404)
+      .end((err, res) =>  {
+        if (err) return done(err);
+        return done();
+      });
+
+   });
+
+  test('Debera eliminar un member, status 200', ( done ) => { 
+
+    request(app)
+      .delete('/members/1')
+      .set('x-access-token', token)
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end((err, res) =>  {
+        if (err) return done(err);
+        return done();
+      });
+
+   });
+
+});
 
