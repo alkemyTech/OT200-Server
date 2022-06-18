@@ -1,8 +1,7 @@
 const db = require("../models");
-const Activity = db.activity;
 
  async function updatedb(body,idActivity) {
-    const activity = await Activity.update(
+    const activity = await db.Activity.update(
         {
             name: body.name,
             content: body.content,
@@ -17,5 +16,11 @@ const Activity = db.activity;
     return activity
 }
 
+const create = async (data) => {
+    
+    const activity = await db.activitiy.create(data);
 
-module.exports = updatedb
+    return activity;
+} 
+
+module.exports = {updatedb, create}
