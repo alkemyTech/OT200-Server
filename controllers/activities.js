@@ -1,4 +1,4 @@
-const create = require('../services/activities').create;
+const create = require('../services/activity');
 
 const createActivity = async (req, res) => {
 
@@ -15,6 +15,7 @@ const createActivity = async (req, res) => {
 
     } catch (error) {
         res.status(500).json({ message: "Ha ocurrido un problema al crear la nueva actividad" })
+        console.log(error)
     }
 }
 

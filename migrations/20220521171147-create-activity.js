@@ -28,6 +28,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
+      deltetedAt: {
+        allowNull: true,
+        type: Sequelize.DATE
+      },
     },
       {
         paranoid: true,
