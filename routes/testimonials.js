@@ -8,10 +8,9 @@ const testimonialSchema = require("../schemas/testimonial");
 const verifyToken = require("./../middleware/verifyToken")
 const checkAdmin = require("../middleware/checkAdmin");
 
-router.post(
-    "/",
-    // verifyToken,
-    // checkAdmin,
+router.post("/",
+    verifyToken,
+    checkAdmin,
     validatorHandler(checkSchema(testimonialSchema)),
     createTestimonial
 );

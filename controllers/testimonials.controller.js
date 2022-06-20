@@ -30,6 +30,7 @@ const deleteTestimonial = async (req, res) => {
         const id = req.params.id;
 
         const result = await deleteOne(id);
+        console.log(result)
 
         if (result === 0) {
 
