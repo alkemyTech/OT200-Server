@@ -26,26 +26,31 @@ const createCategory = async(data) => {
 
 const categoryList = async( data ) => {
 
-    const page = data - 1;
-    const limite = 10;
-    const next = (limite + data);
-    const previous = ( data - limite );
+    const currentPage = data && data > 0 ? data : 0;
 
-    const { count, rows  } = await db.Categories.findAndCountAll({ offset: page, limit: limite });
+    const limit = 10;
 
-    if( data > count ) throw { message:`La cantidad de registros es de: ${ count }`, status:400 };
+    const offset = currentPage * limit;
 
-    const categories = {
-        count,
-        limit:10,
+    const prevPage = currentPage - 1;
+
+    const nextPage = currentPage + 1;
+    
+
+     const { count, rows  } = await db.Categories.findAndCountAll({ offset, limit });
+
+
+    const totalPages = Math.ceil(count / limit);
+
+    if(Number(currentPage) > totalPages - 1) throw { message: `There are just ${totalPages} pages.`, status: 400 } ;
+
+     const categories = { 
+        prevPage: `${ prevPage < 0 ? 'There is no previous page' : 'http://localhost:3000/categories/catalogue?page=' + prevPage }`,            
+        currentPage: `http://localhost:3000/categories/catalogue?page=${currentPage}`,
+        nextPage: `${ nextPage >= totalPages  ? 'There is no next page' : 'http://localhost:3000/categories/catalogue?page=' + nextPage }`,
+        totalPages,
         rows,
-        nextPage: next > count ? null : `${ process.env.HTTP_DEVELOP }/categories?page=${ next }`,
-        currentPage:  data === 1 ? null 
-                    : previous > next ? null 
-                    : previous <= 0 ? `${ process.env.HTTP_DEVELOP }/categories?page=1` 
-                    : `${ process.env.HTTP_DEVELOP }/categories?page=${ previous }`
-       
-    }
+    };         
 
     return categories;
 };
