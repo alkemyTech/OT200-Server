@@ -1,0 +1,154 @@
+tags:
+  - name: testiomonial
+    description: Everything about testimonials
+
+components:
+  schemas:
+    Testimonial:
+      type: object
+      properties: 
+        name:
+          type: string
+          description: name of testimonial owner
+        image:
+          type: string
+          description: a image for the testimonial
+        content:
+          type: string
+          description: content of the testimonial
+      required:
+        - name
+      example:
+        name: Luciano
+        image: pathImage
+        content: Alkemy is the best experiencie in the world!!
+    TestimonialNotFound:
+      type: object
+      properties:
+        message: 
+          type: string
+          description: A message for not found testimonial
+      example: 
+        error: true
+        message: Testimonial not found
+    TestimonialDeleted:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A testimonial was delted
+      example:
+        message: Deleted
+        id: 1
+    ServerError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A message for error server
+      example:
+        error: true
+        message: Something went wrong
+      BadRequest:
+        type: object
+        properties:
+          message:
+            type: string
+            description: some fields are required
+        example:
+          msg: Field must not be empty
+          param: name
+          location: body
+    Unauthorized:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A message for unauthorized action
+      example:
+        message: No tiene los permisos para realizar esta accion
+
+  securitySchemes:
+    xAccessTokenAuth: 
+      type: apiKey
+      in: header
+      name: x-access-token
+
+security:
+  - xAccessTokenAuth: []
+
+paths:
+  /testimonials:
+    post:
+      security:
+      - xAccessTokenAuth: []
+      summary: Create a new testimonial
+      tags:
+        - testimonials
+      requestBody:
+        description: A JSON object containing testimonial information
+        required: true
+        content: 
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Testimonial'
+      responses:
+        201:
+          description: A JSON object with new testimonial information
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/Testimonial'
+        400:
+          description: A JSON Array with errors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ServerError/BadRequest'
+        401:
+          description: A JSON object with error message
+          content:
+            application/json:
+              schema:
+                typw: object
+                items:
+                $ref: '#/components/schemas/Unauthorized'
+
+  
+  /testimonials/{id}:
+    delete:
+      parameters:
+        - in: path
+          name: id   # Note the name is the same as in the path
+          required: true
+          type: integer
+          minimum: 1
+          description: The testimonial ID.
+      security:
+      - xAccessTokenAuth: []  
+      summary: Delete a  testimonial by id
+      tags:
+        - testimonials
+      responses:
+        200: 
+          description: The testimonial was deleted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestimonialDeleted'
+        404: 
+          description: The testimonial was not found.
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestimonialNotFound'
+        500: 
+          description: Something went wrong.
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
