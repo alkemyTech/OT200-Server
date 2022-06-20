@@ -7,14 +7,11 @@ const {welcomeMail} = require('../services/sendMail');
 
 const createUser = async (req, res) => {
     try {
-        const data = req.body;
-        data.roleId = 2;
+        const { firstName, lastName, email, password, photo } = req.body;
 
-        const newUser = await create(data);
-
-        const emailTitle = `Bienvenido ${newUser.firstName}`;
-
-        const email = newUser.email;
+        const newUser = await create({ firstName, lastName, email, password, photo });
+       
+        const emailTitle = `Bienvenido ${firstName}`;
 
         if(newUser){
             welcomeMail(emailTitle, email);
@@ -24,6 +21,8 @@ const createUser = async (req, res) => {
                 data: newUser
             })
         }
+        
+        return res.status(201).json(newUser);
 
     } catch (error) {
 

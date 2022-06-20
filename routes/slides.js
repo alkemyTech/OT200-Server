@@ -1,9 +1,11 @@
 const router = require('express').Router();
 const multer = require('multer');
-const { createNewSlide, deleteSlide } = require('../controllers/slides.controller');
+const { createNewSlide, deleteSlide, findSlide } = require('../controllers/slides.controller');
 const { upload } = require('../middleware/multer');
 const verifyToken = require('../middleware/verifyToken');
 const checkAdmin = require('../middleware/checkAdmin');
+
+router.get('/:id',verifyToken, checkAdmin, findSlide)
 
 //multer saves slide in public/slides folder
 router.post('/', verifyToken, checkAdmin, upload.single('slide'), createNewSlide);
