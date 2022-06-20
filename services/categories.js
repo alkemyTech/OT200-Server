@@ -53,8 +53,17 @@ const categoryList = async( data ) => {
     };         
 
     return categories;
+    
 };
 
+const getCategory = async( id ) => {
+
+    const category = await db.Categories.findByPk( id );
+
+    if( !category ) throw { message:`La categoria con id: -${ id }- no existe en DB`, status: 404 };
+
+    return category;
+}
 
 
 module.exports = {
@@ -62,4 +71,5 @@ module.exports = {
     createCategory,
     deleteOne,
     categoryList,
+    getCategory,
 };
