@@ -1,7 +1,9 @@
 const express = require("express");
 const router = express.Router();
 
-const { createTestimonial, updateTestimonial } = require("../controllers/testimonials.controller");
+
+const { createTestimonial, updateTestimonial, deleteTestimonial } = require("../controllers/testimonials.controller");
+
 const validatorHandler = require("../middleware/validatorHandler");
 const { checkSchema } = require("express-validator");
 const testimonialSchema = require("../schemas/testimonial");
@@ -18,11 +20,17 @@ router.post(
 );
 
 
+
 router.put("/:id",
     verifyToken,
     checkAdmin,
     validatorHandler(testimonialsFields),
-    updateTestimonial
-)
+    updateTestimonial)
+
+
+router.delete("/:id",
+verifyToken, 
+checkAdmin, 
+deleteTestimonial)
 
 module.exports = router;

@@ -1,12 +1,13 @@
 const db = require("./../models/");
 
-const create = async (data) =>{    
+const create = async (data) => {
 
-    const testimonial = await db.Testimonial.create(data);    
+    const testimonial = await db.Testimonial.create(data);
 
     return testimonial
 
 }
+
 
 const testimonalUpdate = async (body, testimonialId) => {
     const testimonial = await db.Testimonial.update(
@@ -25,4 +26,13 @@ const testimonalUpdate = async (body, testimonialId) => {
     }
 }
 
-module.exports = { create, testimonalUpdate }
+const deleteOne = async (id) => {
+
+    const testimonialDel = await db.Testimonial.destroy({ where: { id } });
+
+    return testimonialDel;
+
+module.exports = { create, testimonalUpdate, deleteOne }
+
+
+

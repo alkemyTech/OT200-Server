@@ -1,9 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const verifyToken = require('../middleware/verifyToken');
-const checkAdmin = require('../middleware/checkAdmin');
+const {verifyToken, checkAdmin} = require('../middleware');
 const getAllComments = require('../controllers/comment.controller');
-const verifyToken = require('../middleware/verifyToken');
 const validatorHandler = require('../middleware/validatorHandler');
 const commentsFields = require('../helpers/checkCommentsFields');
 const { newComment } = require('../controllers/comments.controller');
