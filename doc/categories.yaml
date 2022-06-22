@@ -103,6 +103,8 @@ paths:
              description: No se ha enviado el token de autenticación
            400:
              description: Token invalido
+           404:
+             description: Category not found
 
        delete:
         security:
@@ -123,6 +125,8 @@ paths:
              description: No se ha enviado el token de autenticación
            400:
              description: Token invalido
+           404:
+             description: Category not found
 
         
  
