@@ -1,5 +1,4 @@
 const db = require("./../models/");
-const db1 = require('../models');
 const bcrypt = require("bcrypt");
 
 const create = async (data) =>{
