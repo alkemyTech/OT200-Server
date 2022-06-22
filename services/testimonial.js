@@ -9,6 +9,17 @@ const create = async (data) => {
 }
 
 
+const find = async (offset, limit) => {
+    
+    const testimonials = await db.Testimonial.findAndCountAll({ offset, limit })
+
+    return testimonials;
+
+}
+
+
+
+
 const testimonalUpdate = async (body, testimonialId) => {
     const testimonial = await db.Testimonial.update(
         { body },
@@ -32,7 +43,8 @@ const deleteOne = async (id) => {
 
     return testimonialDel;
 
-module.exports = { create, testimonalUpdate, deleteOne }
+module.exports = { create, testimonalUpdate, deleteOne, find }
+
 
 
 
