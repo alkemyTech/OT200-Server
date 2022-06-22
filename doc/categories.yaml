@@ -1,0 +1,128 @@
+
+components:
+   securitySchemes:
+    ApiKeyAuth: 
+      type: apiKey
+      in: header
+      name: x-access-token
+   schemas:
+     Categories:
+       type: object
+       properties:
+          name: 
+           type: string
+           description: the category name
+          description:
+           type: string
+           description: the category description
+          image:
+           type: string
+           description: the category image
+       required:
+         - name
+       example:
+         name: Comunidad
+         description: Sucesos diversos sobre la comunidad
+         image: image.png 
+
+
+
+security:
+  - ApiKeyAuth: []
+
+tags:
+   name: Categories
+   description: API para interactuar con las categorias.
+
+
+paths:
+     /categories:
+       post:
+        security:
+          - ApiKeyAuth: []
+        summary: Creacion de categoria
+        tags: [Categories]
+        requestBody:
+           required: true
+           content:
+               application/json:
+                 schema:
+                   type: object
+                   $ref: '#/components/schemas/Categories'
+        responses:
+           200:
+             description: La categoría se creo con exito
+           401:
+             description: No se ha enviado el token de autenticación
+           400:
+             description: Token invalido
+     
+     
+       get:
+        security:
+          - ApiKeyAuth: []
+        summary: Listado de los nombres de todas las categorias
+        tags: [Categories]
+        responses:
+           200:
+             description: La categoría se creo con exito
+             content:
+               application/json:
+                 schema:
+                   type: array
+                   items:
+                    example:
+                      name: Comunidad
+           401:
+             description: No se ha enviado el token de autenticación
+           400:
+             description: Token invalido
+
+     /categories/{id}:
+       get:
+        security:
+          - ApiKeyAuth: []
+        summary: Detalle de una categoria
+        tags: [Categories]
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: string
+            required: true
+            description: the category id
+        responses:
+           200:
+             description: ok
+             content:
+               application/json:
+                 schema:
+                   type: object
+                   $ref: '#/components/schemas/Categories'
+           401:
+             description: No se ha enviado el token de autenticación
+           400:
+             description: Token invalido
+
+       delete:
+        security:
+          - ApiKeyAuth: []
+        summary: Eliminación de una categoria
+        tags: [Categories]
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: string
+            required: true
+            description: the category id
+        responses:
+           200:
+             description: Deleted
+           401:
+             description: No se ha enviado el token de autenticación
+           400:
+             description: Token invalido
+
+        
+ 
