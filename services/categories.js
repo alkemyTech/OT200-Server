@@ -42,12 +42,12 @@ const categoryList = async( data ) => {
 
     const totalPages = Math.ceil(count / limit);
 
-    if(Number(currentPage) > totalPages - 1) throw { message: `There are just ${totalPages} pages.`, status: 400 } ;
+    if(Number(currentPage) > totalPages - 1) throw { message: `Solo hay un total de ${totalPages} paginas.`, status: 400 } ;
 
      const categories = { 
-        prevPage: `${ prevPage < 0 ? 'There is no previous page' : 'http://localhost:3000/categories/catalogue?page=' + prevPage }`,            
+        prevPage: prevPage < 0 ? null : 'http://localhost:3000/categories/catalogue?page=' + prevPage,            
         currentPage: `http://localhost:3000/categories/catalogue?page=${currentPage}`,
-        nextPage: `${ nextPage >= totalPages  ? 'There is no next page' : 'http://localhost:3000/categories/catalogue?page=' + nextPage }`,
+        nextPage:  nextPage >= totalPages  ? null : 'http://localhost:3000/categories/catalogue?page=' + nextPage ,
         totalPages,
         rows,
     };         
