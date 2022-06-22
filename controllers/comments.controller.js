@@ -1,5 +1,6 @@
 const { request, response} = require('express');
-const { createComment, changeComment } = require("../services/comment");
+const { createComment, changeComment, allCommentsFromPost } = require("../services/comment");
+
 
 const getComments = ( req = request, res = response )=> {
 
@@ -34,9 +35,30 @@ const updateComment = async (req, res) => {
 }
 
 
+const getPostCommnets = async(req,res) => {
+
+    const { id } = req.params;
+
+try {
+
+    const comments = await allCommentsFromPost( id );
+
+    if( comments.length === 0  ) return res.status(200).json({ error: false, message:'No se encontraron comentarios en este post', comments});
+
+    res.status(200).json({ error: false, message:'ok', comments});
+    
+} catch (error) {
+
+    res.status(500).json({ error: true, message: 'Error en el servidor: ' + error.message, comments: null});
+    
+}
+};
+
+
 
 module.exports = {
     getComments,
     newComment,
-    updateComment
+    updateComment,
+    getPostCommnets,
 }

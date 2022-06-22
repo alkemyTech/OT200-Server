@@ -26,4 +26,26 @@ const destroySlide = async( id ) => {
 
 };
 
-module.exports = { slideCount, createSlide, destroySlide };
+
+const slideUpdated = async (body, slideId) => {
+    const slide = await slideModel.update(
+        { body },
+        {
+            where: {
+                id: parseInt(slideId)
+            },
+        }
+    )
+    return slide;
+}
+
+const findOne = async (id) => {
+
+    const slide = await slideModel.findByPk(id);
+
+    return slide;
+
+}
+
+module.exports = { slideCount, createSlide, destroySlide, slideUpdated, findOne };
+

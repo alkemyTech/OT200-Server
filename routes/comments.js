@@ -1,7 +1,3 @@
-const { Router } = require("express");
-const router = Router();
-
-const verifyToken = require("../middleware/verifyToken");
 const validatorHandler = require("../middleware/validatorHandler");
 const {
   commentsFields,
@@ -14,7 +10,22 @@ const {
 
 const verifyOwner = require("../middleware/verifyComment");
 
+const express = require('express');
+const router = express.Router();
+const {verifyToken, checkAdmin} = require('../middleware');
+const getAllComments = require('../controllers/comment.controller');
+const commentsFields = require('../helpers/checkCommentsFields');
+const { newComment } = require('../controllers/comments.controller');
+
+router.get('/', 
+verifyToken, 
+checkAdmin, 
+getAllComments);
+
+
+
 router.post("/", verifyToken, validatorHandler(commentsFields), newComment);
+
 router.put(
   "/:id",
   verifyToken,
@@ -22,5 +33,6 @@ router.put(
   validatorHandler(updateFields),
   updateComment
 );
+
 
 module.exports = router;

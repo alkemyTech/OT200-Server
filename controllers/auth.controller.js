@@ -2,20 +2,33 @@ const {create} = require("../services/user");
 const findUser = require('../services/auth');
 const bcrypt = require('bcrypt');
 const userToken = require('../middleware/userToken');
+const {welcomeMail} = require('../services/sendMail');
+
+
 
 const createUser = async (req, res) => {
     try {
-        const data = req.body;
-        data.roleId = 2;
+        const { firstName, lastName, email, password, photo } = req.body;
 
-        const newUser = await create(data)
+        const newUser = await create({ firstName, lastName, email, password, photo });
+       
+        const emailTitle = `Bienvenido ${firstName}`;
+
+        if(newUser){
+            welcomeMail(emailTitle, email);
+            
+            return res.status(201).json({
+                message: 'Usuario creado',
+                data: newUser
+            })
+        }
         
         return res.status(201).json(newUser);
 
     } catch (error) {
 
         return res.status(500).json({
-            error: true,
+            error: error.message,
             message: "Something was wrong",
         });
     }
