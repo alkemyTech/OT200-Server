@@ -1,4 +1,6 @@
-const { createSlide, slideCount, destroySlide } = require('../services/slide.service');
+
+const { createSlide, slideCount, destroySlide, slideUpdated, findOne } = require('../services/slide.service');
+
 
 const createNewSlide = async (req, res) => {
   
@@ -47,4 +49,47 @@ const deleteSlide = async(req,res) => {
  }
 };
 
-module.exports = { createNewSlide, deleteSlide };
+
+
+const updateSlide = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const slide = await slideUpdated (req.body, id);
+    return res.status(slide.id ? 200 : 404).json(slide);
+  } catch (error) {
+    res.status(500).json(error.message);
+  }
+}
+
+const findSlide = async (req, res) => {
+
+  try {
+    
+    const { id } = req.params;
+
+    const slide = await findOne(id);
+  
+    if(!slide) {
+
+      return res.status(404).json({
+        error: true,
+        message: "Slide not found",
+      })
+
+    }
+  
+    return res.json(slide);
+
+  } catch (error) {
+
+    return res.status(500).json({
+      error: true,
+      message: "Something went wrong",
+    })
+
+  }
+
+}
+
+module.exports = { createNewSlide, deleteSlide,updateSlide, findSlide };
+
