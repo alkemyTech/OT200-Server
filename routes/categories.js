@@ -13,9 +13,10 @@ router.post('/',verifyToken , checkAdmin, validatorHandler( categoriesFields ), 
 
 router.get("/", verifyToken, checkAdmin, getAllCategories);
 
+router.get("/catalogue", verifyToken, CategoriesList);
+
 router.get("/:id", verifyToken, checkAdmin, getOneCategory);
 
-router.get("/catalogue", verifyToken, CategoriesList);
 
 router.delete(
   "/:id",
