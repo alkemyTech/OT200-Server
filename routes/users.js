@@ -1,9 +1,16 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+const { checkAdmin, verifyToken } = require('../middleware');
+const { getAllUsers, deleteUser } = require('../controllers/users.controller');
+
+
+
+
+router.get('/', verifyToken, checkAdmin, getAllUsers );
+
+
+router.delete('/:id', verifyToken, deleteUser );
+
 
 module.exports = router;
