@@ -11,68 +11,49 @@ const tokenNull = '12345';
 
 describe('POST/members', () => {
 
-  test('Debera crear un miembro, status: 201', ( done ) => {
+  test('Debera crear un miembro, status: 201', async( ) => {
 
-      request(app)
+     const response = await request(app)
       .post('/members')
       .set('x-access-token', token)
       .send({name:'pruebaTest'})
       .set('Accept', 'application/json')
-      .expect('Content-Type', /json/)
-      .expect(201)
-      .end((err, res) =>  {
-          if (err) return done(err);
-          return done();
-        });
-
+      expect(response.status).toEqual(201);
+      expect(response.body).toBeInstanceOf( Object );
+     
    });
 
 
-  test('Debera devolver un status 400 si no se envian los campos por request', ( done ) => { 
+  test('Debera devolver un status 400 si no se envian los campos por request', async( ) => { 
 
-      request(app)
+     const response = await request(app)
       .post('/members')
       .set('x-access-token', token)
       .send({name:''})
       .set('Accept', 'application/json')
-      .expect('Content-Type', /json/)
-      .expect(400)
-      .end((err, res) =>  {
-          if (err) return done(err);
-          return done();
-        });
+      expect(response.status).toEqual(400);
 
    });
 
-  test('No se ah enviado el token de autenticación, status:401', (done) => {
+  test('No se ah enviado el token de autenticación, status:401', async() => {
 
-      request(app)
+     const response = await request(app)
       .post('/members')
       .set('x-access-token', '')
       .set('Accept', 'application/json')
-      .expect('Content-Type', /json/)
-      .expect(401)
-      .expect({ error: "No se ha enviado el token de autenticación"})
-      .end((err, res) =>  {
-        if (err) return done(err);
-        return done();
-      });
+      expect(response.status).toEqual(401);
+      expect(response.body.error).toEqual( "No se ha enviado el token de autenticación" );
 
   });
 
-  test('Token invalido, status:400', (done) => { 
+  test('Token invalido, status:400', async() => { 
 
-      request(app)
+     const response = await request(app)
       .post('/members')
       .set('x-access-token', tokenNull )
       .set('Accept', 'application/json')
-      .expect('Content-Type', /json/)
-      .expect(400)
-      .expect({ message: "Token invalido" })
-      .end((err, res) =>  {
-        if (err) return done(err);
-        return done();
-      });
+      expect(response.status).toEqual(400);
+      expect(response.body.message).toEqual( "Token invalido" );
 
   });
 
@@ -82,70 +63,51 @@ describe('POST/members', () => {
 
 describe("GET/members", () => {
 
-test('Debera mostrar un listado con todos los miembros, status:200', (done) => {
+test('Debera mostrar un listado con todos los miembros, status:200', async() => {
 
-    request(app)
+   const response = await request(app)
     .get('/members')
     .set('x-access-token', token)
     .set('Accept', 'application/json')
-    .expect('Content-Type', /json/)
-    .expect(200)
-    .end((err, res) =>  {
-      if (err) return done(err);
-      return done();
-    });
-    
+    expect(response.status).toEqual(200);
+    expect(response.body).toBeInstanceOf( Object );
 
  });
 
- test('No se ah enviado el token de autenticación, status:401', (done) => {
+ test('No se ah enviado el token de autenticación, status:401', async() => {
 
-    request(app)
+   const response = await request(app)
     .get('/members')
     .set('x-access-token', '')
     .set('Accept', 'application/json')
-    .expect('Content-Type', /json/)
-    .expect(401)
-    .expect({ error: "No se ha enviado el token de autenticación"})
-    .end((err, res) =>  {
-      if (err) return done(err);
-      return done();
-    });
+    expect(response.status).toEqual(401);
+    expect(response.body.error).toEqual( "No se ha enviado el token de autenticación" );
 
   });
 
-  test('Token invalido, status:400', (done) => { 
+  test('Token invalido, status:400', async() => { 
 
-    request(app)
+   const response = await request(app)
     .get('/members')
     .set('x-access-token', tokenNull )
     .set('Accept', 'application/json')
-    .expect('Content-Type', /json/)
-    .expect(400)
-    .expect({ message: "Token invalido" })
-    .end((err, res) =>  {
-      if (err) return done(err);
-      return done();
-    });
+    expect(response.status).toEqual(400);
+    expect(response.body.message).toEqual( "Token invalido" );
+    
 
   });
 
-  test('No tiene los permisos de adminitrador, status:403', ( done ) => { 
+  test('No tiene los permisos de adminitrador, status:403', async() => { 
 
     user.roleId = 2;
     const tokenId2 = generateToken(user);
 
-    request(app)
+   const response = await request(app)
     .get('/members')
     .set('x-access-token', tokenId2 )
     .set('Accept', 'application/json')
-    .expect('Content-Type', /json/)
-    .expect(403)
-    .expect({  msg: 'No tiene los permisos necesarios para acceder a esta información, comuniquese con admisntración'})
-    .end((err, res) =>  {
-      if (err) return done(err);
-      return done();
-    });
+    expect(response.status).toEqual(403);
+    expect(response.body.msg).toEqual( 'No tiene los permisos necesarios para acceder a esta información, comuniquese con admisntración' );
 
    });
 
@@ -153,66 +115,48 @@ test('Debera mostrar un listado con todos los miembros, status:200', (done) => {
 
 describe('DELETE/members/:id', () => {
 
-  test('No se ah enviado el token de autenticación, status:401', (done) => {
+  test('No se ah enviado el token de autenticación, status:401', async() => {
 
-    request(app)
+   const response = await request(app)
     .delete('/members/1')
     .set('x-access-token', '')
     .set('Accept', 'application/json')
-    .expect('Content-Type', /json/)
-    .expect(401)
-    .expect({ error: "No se ha enviado el token de autenticación"})
-    .end((err, res) =>  {
-      if (err) return done(err);
-      return done();
-    });
+    expect(response.status).toEqual(401);
+    expect(response.body.error).toEqual( "No se ha enviado el token de autenticación" );
 
   });
 
-  test('Token invalido, status:400', (done) => { 
+  test('Token invalido, status:400', async() => { 
 
-    request(app)
+   const response = await request(app)
     .delete('/members/1')
     .set('x-access-token', tokenNull )
     .set('Accept', 'application/json')
-    .expect('Content-Type', /json/)
-    .expect(400)
-    .expect({ message: "Token invalido" })
-    .end((err, res) =>  {
-      if (err) return done(err);
-      return done();
-    });
-
+    expect(response.status).toEqual(400);
+    expect(response.body.message).toEqual( "Token invalido" );
+   
   });
 
-  test('El miembro no existe en DB, status 404', ( done ) => { 
+  test('El miembro no existe en DB, status 404', async() => { 
 
-    request(app)
+   const response = await request(app)
       .delete('/members/ABC123')
       .set('x-access-token', token)
       .set('Accept', 'application/json')
-      .expect('Content-Type', /json/)
-      .expect(404)
-      .end((err, res) =>  {
-        if (err) return done(err);
-        return done();
-      });
+      expect(response.status).toEqual(404);
+      expect(response.body.message).toEqual( "Member not found" );
 
    });
 
-  test('Debera eliminar un member, status 200', ( done ) => { 
+  test('Debera eliminar un member, status 200', async() => { 
 
-    request(app)
+  const response = await request(app)
       .delete('/members/1')
       .set('x-access-token', token)
       .set('Accept', 'application/json')
-      .expect('Content-Type', /json/)
-      .expect(200)
-      .end((err, res) =>  {
-        if (err) return done(err);
-        return done();
-      });
-
+      expect(response.status).toEqual(200)
+      expect(response.body.message).toEqual("Deleted")
+      expect(response.body.id).toEqual('1')
    });
 
 });
