@@ -1,4 +1,25 @@
-const { updatedPublicData } = require('../services/organization');
+const { getAll, updatedPublicData } = require("../services/organizations");
+
+const getOrganizations = async (req, res) => {
+
+    try {
+
+        const organizations = await getAll();
+
+        return res.json(organizations);      
+
+    } catch (error) {
+      
+        return res.status(500).json({            
+            error: true,
+            message: "Something went wrong"
+        })
+
+    }
+
+}
+
+
 
 const updatedOrganizationData = async(req, res) => {
 
@@ -33,7 +54,7 @@ const updatedOrganizationData = async(req, res) => {
 };
 
 
-
 module.exports = {
-    updatedOrganizationData,
-}
+    getOrganizations,
+    updatedOrganizationData
+};
