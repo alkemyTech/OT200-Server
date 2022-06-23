@@ -1,5 +1,6 @@
 const { request, response} = require('express');
-const { createComment, allCommentsFromPost } = require('../services/comment');
+const { createComment, changeComment, allCommentsFromPost } = require("../services/comment");
+
 
 const getComments = ( req = request, res = response )=> {
 
@@ -22,6 +23,16 @@ const newComment = async(req = request, res = response ) => {
     }
 
 };
+
+const updateComment = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const comment = await changeComment(req.body, id);
+        return res.status(comment.id ? 200 : 404).json(comment);
+    } catch (error) {
+        return res.status(500).json(error.message);
+    }
+}
 
 
 const getPostCommnets = async(req,res) => {
@@ -48,5 +59,6 @@ try {
 module.exports = {
     getComments,
     newComment,
+    updateComment,
     getPostCommnets,
 }
