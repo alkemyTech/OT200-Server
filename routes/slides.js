@@ -1,4 +1,3 @@
-
 const router = require("express").Router();
 const multer = require("multer");
 const {
@@ -20,6 +19,15 @@ const slidesInputs = require("../helpers/checkslides");
 
 
 router.get('/:id',verifyToken, checkAdmin, findSlide)
+
+
+
+
+
+
+
+
+
 
 //multer saves slide in public/slides folder
 router.post(
@@ -50,5 +58,7 @@ router.use((error, req, res, next) => {
       .json({ error: true, message: "Image format must be jpg, jpeg or png." });
   }
 });
+
+router.get("/", verifyToken, checkAdmin, slidesList);
 
 module.exports = router;
