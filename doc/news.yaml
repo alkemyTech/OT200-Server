@@ -1,0 +1,214 @@
+tags:
+  -name: News
+  description: Documentacion de Novedades.
+
+components:
+  schemas:
+    News:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: id de la noticia.
+        name:
+          type: string
+          description: Titulo de la noticia.
+        content:
+          type: string
+          description: Contenido de la noticia.
+        image:
+          type: string
+          description: Imagen de la noticia.
+      required:
+        -name
+        -image
+        -content
+      example:
+        name: Noticia 1
+        content: Esto ocurrio en la noticia 1.
+        image: news.jpg
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            type: object
+            content:
+              msg: string
+          example:
+            msg: Token inválido
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            type: object
+            content:
+              msg: string
+          example:
+            msg: La petición enviada es inválida.
+    NotFound:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            type: object
+            content:
+              msg: string
+          example:
+            msg: No encontrado
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            type: object
+            content:
+              msg: string
+          example:
+            msg: Error con el servidor.
+  securitySchemes:
+    tokenAuth: 
+      type: apiKey
+      in: header
+      name: x-access-token
+      
+security: 
+    - tokenAuth: []
+
+
+
+
+paths:
+ /news: 
+    get:
+      summary: Muestras todas las noticias.
+      tags: [News]     
+      responses:
+        200:
+          description: OK
+          content: 
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/News'
+ 
+    post:
+      summary: Crea las noticias.
+      tags: [News]
+      security:
+      - tokenAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: '#/components/schemas/News'
+      responses:
+        201:
+          description: Noticia creada correctamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                ref: '#/components/schemas/News'
+        400:
+          $ref: '#/components/schemas/BadRequest'
+        500:
+          $ref: '#/components/schemas/InternalServerError'
+
+
+
+
+ /news/{id}:
+  get:
+    summary: Muestra la noticia por id.
+    tags: [News]
+    security:
+      - tokenAuth: []
+    parameters:
+      - in: path
+        name: id
+        schema: 
+          type: integer
+          description: Id de noticia.
+    responses:
+      200:
+        description: OK
+        content: 
+          application/json:
+            schema:
+              type: object
+              $ref: '#/components/schemas/News'
+      404:
+        $ref: '#/components/schemas/NotFound'
+
+  put:
+    summary: Actualiza la noticia
+    tags: [News]
+    security:
+      - tokenAuth: []
+    parameters:
+      - in: path
+        name: id
+        schema: 
+          type: integer
+          description: Id de noticia.
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/News'
+    responses:
+      200:
+        description: Noticia actualizada correctamente.
+        content:
+          application/json:
+            schema:
+              type: object
+              content:
+                msg: string
+              example:
+                msg: Noticia actualizada correctamente.
+      400:
+        $ref: '#/components/schemas/BadRequest'
+      401:
+        $ref: '#/components/schemas/Unauthorized'
+      404:
+        $ref: '#/components/schemas/NotFound'
+      500:
+        $ref: '#/components/schemas/InternalServerError'
+
+
+  delete:
+    summary: Borra la noticia.
+    tags: [News]
+    security:
+      - tokenrAuth: []
+    parameters:
+      - in: path
+        name: id
+        schema: 
+          type: integer
+          description: Id de noticia.
+    responses:
+      200:
+        description: Noticia borrada correctamente.
+        content:
+          application/json:
+            schema:
+              type: object
+              content:
+                msg: string
+              example:
+                msg: Noticia borrada correctamente.
+      401:
+        $ref: '#/components/schemas/Unauthorized'
+      404:
+        $ref: '#/components/schemas/NotFound'
+      500:
+        $ref: '#/components/schemas/InternalServerError'
+
