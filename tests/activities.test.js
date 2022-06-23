@@ -1,12 +1,10 @@
 const request = require('supertest');
-// const routes = require('../routes/index');
+const generateToken = require('../middleware/userToken');
 const app = require('../app');
-const headerAdmin = {
-    "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Niwicm9sZUlkIjoxLCJpYXQiOjE2NTU1NTk5NjUsImV4cCI6MTY1NTY0NjM2NX0.pmlu3vlq8qDB6IEwM56cdmMOSWBIOI5Ys8nIE_tkHqo"
-};
-const headerStandar = {
-    "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwicm9sZUlkIjoyLCJpYXQiOjE2NTU1NTk5NDUsImV4cCI6MTY1NTY0NjM0NX0.jjY5BJpE0HlZCGDf5hvWYUhfnUfOqg1cfDcMfV0f1tI"
-}
+const userAdmin = {id: 1, name: "userAdmin", roleId: 1};
+const userStandar = {id: 2, name: "userStandar", roleId: 2 };
+let headerAdmin = {"x-access-token": generateToken(userAdmin)};
+let headerStandar = {"x-access-token": generateToken(userStandar)};
 
 
 describe('POST /activities', () => {
