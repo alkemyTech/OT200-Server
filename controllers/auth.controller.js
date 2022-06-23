@@ -2,7 +2,7 @@ const {create} = require("../services/user");
 const findUser = require('../services/auth');
 const bcrypt = require('bcrypt');
 const userToken = require('../middleware/userToken');
-const {welcomeMail} = require('../services/sendMail');
+// const {welcomeMail} = require('../services/sendMail');
 
 
 const createUser = async (req, res) => {
@@ -14,7 +14,7 @@ const createUser = async (req, res) => {
         const emailTitle = `Bienvenido ${firstName}`;
 
         if(newUser){
-            welcomeMail(emailTitle, email);
+            // welcomeMail(emailTitle, email);
             
             return res.status(201).json({
                 message: 'Usuario creado',

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const verifyToken = "Importar";
-const checkAdmin = "Importar2";
+// const verifyToken = "Importar";
+// const checkAdmin = "Importar2";
 const { createActivity } = require('../controllers/activities');
 const { updateActivity } = require("../controllers/antivityController");
 const { verifyFields, errorHandler } = require('../middleware/activityValidator');
