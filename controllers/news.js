@@ -1,4 +1,5 @@
-const { create, findId } = require("../services/news");
+const {create, updateNewsService, findId} = require('../services/news');
+
 
 const createNews = async (req, res) => {
     try {
@@ -41,5 +42,28 @@ const detailNews = async (req, res) => {
 
 }
 
+const updateNews = async (req, res) => {
+    try{
+        const {id} = req.params
 
-module.exports = {createNews, detailNews};
+        const {name, content, image} = req.body;
+
+        const update = await updateNewsService(id,{name, content, image});
+        
+        res.status(200).json({
+            message: 'Noticia actualizada',
+            data: update,
+            newData: { name, content, image }
+
+        });
+
+    }catch(error){
+        res.status(500).send({
+            message: error.message,
+        });
+        console.log(error);
+    }
+}
+
+
+module.exports = {createNews, detailNews, updateNews};

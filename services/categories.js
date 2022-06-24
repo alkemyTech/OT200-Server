@@ -1,4 +1,4 @@
-const db = require('../models');
+const db = require("../models");
 
 const deleteOne = async (id) => {
 
@@ -11,8 +11,24 @@ const findAll = async() => {
     
     const category = await db.Categories.findAll({attributes: ['name']});
 
-    return category;
-}
+  return category;
+};
+
+const updateData = async (body, categoryId) => {
+  const category = await db.Category.update(
+    {
+      name: body.name,
+      description: body.description,
+      image: body.image,
+    },
+    {
+      where: {
+        id: parseInt(categoryId),
+      },
+    }
+  );
+  return category;
+};
 
 const createCategory = async(data) => {
 
@@ -48,6 +64,16 @@ const categoryList = async( data ) => {
     }
 
     return categories;
+}
+
+const getCategory = async( id ) => {
+
+    const category = await db.Categories.findByPk( id );
+
+    if( !category ) throw { message:`La categoria con id: -${ id }- no existe en DB`, status: 404 };
+
+    return category;
+
 };
 
 
@@ -57,4 +83,6 @@ module.exports = {
     createCategory,
     deleteOne,
     categoryList,
+    getCategory,
+    updateData,
 };

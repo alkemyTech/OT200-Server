@@ -1,5 +1,6 @@
 
-const { findAll, deleteOne, createCategory, categoryList } = require('../services/categories');
+const { findAll, updateData, createCategory, getCategory, deleteOne, categoryList } = require('../services/categories');
+
 
 
 const deleteCategory = async (req, res)=> {
@@ -59,7 +60,6 @@ const getAllCategories = async (req, res) => {
     } catch (error) {
         res.status(500).json(error.message);
     }
-
 };
 
 const CategoriesList = async(req, res) => {
@@ -84,16 +84,44 @@ const CategoriesList = async(req, res) => {
          res.status( error.status ).json({error: true, message: error.message, categories: null });
 
     }
+}
+
+const updateCategory = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const category = await updateData(req.body, id);
+    return res.status(category.id ? 200 : 404).json(category);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+
+const getOneCategory = async(req, res) => {
+
+    const { id } = req.params;
+
+    try {
+
+        const category = await getCategory( id );
+    
+        res.status(200).json({error: false, message: 'ok', category});
+        
+    } catch (error) {
+        if( !error.status ) {
+           return res.status(500).json({
+                error: true,
+                message: 'Error en el servidor, comunicarse con el administrador ',
+                category: null
+            });
+        }
+
+        res.status(error.status).json({error: true, message: error.message, category: null});
+
+    }
 
 };
 
-const getOneCategory = (req, res) => {
-
-};
-
-const updateCategory = (req, res) => {
-
-};
 
 
 module.exports = {
@@ -104,4 +132,7 @@ module.exports = {
     deleteCategory,
     CategoriesList
 }
+
+
+
 

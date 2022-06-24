@@ -1,19 +1,29 @@
 const express = require("express");
 const router = express.Router();
 
-const getCategories = require('../controllers/categories').getAllCategories;
+const  { getAllCategories, newCategory, getOneCategory, deleteCategory, updateCategory, CategoriesList } = require('../controllers/categories');
+
 const verifyToken = require('../middleware/verifyToken');
 const checkAdmin = require('../middleware/checkAdmin');
 
 const { categoriesFields } = require('../helpers');
-const validatorHandler = require('../middleware/validatorHandler');
-const { newCategory, deleteCategory, CategoriesList } = require('../controllers/categories');
+const validatorHandler = require("../middleware/validatorHandler");
+const bodyrequest = require("../helpers/checkCategories");
 
+
+router.put(
+  "/:id",
+  verifyToken,
+  checkAdmin,
+  validatorHandler(bodyrequest),
+  updateCategory
+);
 
 router.post('/',verifyToken , checkAdmin, validatorHandler( categoriesFields ), newCategory);
 
+router.get("/", verifyToken, checkAdmin, getAllCategories);
 
-router.get("/", verifyToken, checkAdmin, getCategories);
+router.get("/:id", verifyToken, checkAdmin, getOneCategory);
 
 router.get("/catalogue", verifyToken, CategoriesList);
 

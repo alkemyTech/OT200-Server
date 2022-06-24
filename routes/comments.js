@@ -1,15 +1,38 @@
-const { Router } = require('express');
-const router = Router();
+const validatorHandler = require("../middleware/validatorHandler");
+const {
+  commentsFields,
+  updateFields,
+} = require("../helpers/checkCommentsFields");
+const {
+  newComment,
+  updateComment,
+  getAllComments,
+} = require("../controllers/comments.controller");
 
-const verifyToken = require('../middleware/verifyToken');
-const validatorHandler = require('../middleware/validatorHandler');
-const commentsFields = require('../helpers/checkCommentsFields');
-const { newComment } = require('../controllers/comments.controller');
+const verifyOwner = require("../middleware/verifyComment");
+
+const express = require('express');
+const router = express.Router();
+const {verifyToken, checkAdmin} = require('../middleware');
 
 
-router.post('/', verifyToken, validatorHandler(commentsFields), newComment );
+
+router.get('/', 
+verifyToken, 
+checkAdmin, 
+getAllComments);
 
 
+
+router.post("/", verifyToken, validatorHandler(commentsFields), newComment);
+
+router.put(
+  "/:id",
+  verifyToken,
+  verifyOwner,
+  validatorHandler(updateFields),
+  updateComment
+);
 
 
 module.exports = router;
