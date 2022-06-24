@@ -1,6 +1,22 @@
 const db = require("../models");
 const Member = db.member;
 
+const find = async () => {
+    
+    const members = await db.Member.findAll();
+
+    return members
+
+}
+
+const deleteOne = async (id) => {
+
+    const member =  await db.Member.destroy( { where: { id } } );    
+
+    return member
+
+}
+
 
 async function creatememberdb(body) {
     const { id, name, facebookUrl, instagramUrl, linkedinUrl, image, description } = body
@@ -19,4 +35,8 @@ async function creatememberdb(body) {
 }
 
 
-module.exports = creatememberdb
+module.exports = {
+    creatememberdb,
+    find,
+    deleteOne
+}

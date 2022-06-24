@@ -1,13 +1,16 @@
 const express = require("express");
 const router = express.Router();
-const getCategories = require("../controllers/categories").getAllCategories;
-const verifyToken = require("../middleware/verifyToken");
-const checkAdmin = require("../middleware/checkAdmin");
-const { updateCategory } = require("../controllers/categories");
+
+const  { getAllCategories, newCategory, getOneCategory, deleteCategory, updateCategory  } = require('../controllers/categories');
+
+const verifyToken = require('../middleware/verifyToken');
+const checkAdmin = require('../middleware/checkAdmin');
+
+const { categoriesFields } = require('../helpers');
 const validatorHandler = require("../middleware/validatorHandler");
 const bodyrequest = require("../helpers/checkCategories");
 
-router.get("/", verifyToken, checkAdmin, getCategories);
+
 router.put(
   "/:id",
   verifyToken,
@@ -16,4 +19,19 @@ router.put(
   updateCategory
 );
 
+router.post('/',verifyToken , checkAdmin, validatorHandler( categoriesFields ), newCategory);
+
+router.get("/", verifyToken, checkAdmin, getAllCategories);
+
+router.get("/:id", verifyToken, checkAdmin, getOneCategory);
+
+router.delete(
+  "/:id",
+  verifyToken,
+  checkAdmin,
+  deleteCategory
+);
+
+
 module.exports = router;
+

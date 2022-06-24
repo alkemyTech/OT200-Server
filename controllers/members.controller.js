@@ -1,6 +1,5 @@
-const creatememberdb = require("../services/members");
+const {creatememberdb, find, deleteOne} = require("../services/members");
 const { request, response } = require('express');
-const find = require("./../services/member")
 
 const getMembers = async ( req = request, res = response  ) => {
 
@@ -21,6 +20,37 @@ const getMembers = async ( req = request, res = response  ) => {
 
 }
 
+
+const deleteOneMember = async (req ,res) => {
+
+    try {
+
+        const {id} = req.params;
+        
+        const result = await deleteOne(id);
+
+        if(result === 0) {
+            return res.status(404).json({
+                error: true,
+                message: "Member not found"
+            })
+        }
+    
+        return res.json({
+            message: "Deleted",
+            id
+        })
+        
+    } catch (error) {
+
+        return res.status(500).json({
+            error: true,
+            message: "Something went wrong"
+        })
+    }
+}
+
+
 const createMember = async (req, res) => {
   try {
     const newMember = await creatememberdb(req.body);
@@ -33,4 +63,5 @@ const createMember = async (req, res) => {
 module.exports = {
   getMembers,
   createMember,
+  deleteOneMember
 };

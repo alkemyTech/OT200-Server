@@ -1,21 +1,27 @@
 const express = require("express");
 const router = express.Router();
-const { getMembers,createMember } = require("../controllers/members.controller");
+const { getMembers,createMember, deleteOneMember } = require("../controllers/members.controller");
 const checkAdmin = require("../middleware/checkAdmin");
 const verifyToken = require("../middleware/verifyToken");
 
 router.get(
   "/",
-  // verifyToken,
-  // checkAdmin,
+  verifyToken,
+  checkAdmin,
   getMembers
 );
+
+router.delete(
+  "/:id",
+  verifyToken,
+  deleteOneMember
+)
 
 const {
   verifyInputs,
   errorhandler,
 } = require("../middleware/verifyMembersInputs");
-const verifyToken = require("../middleware/verifyToken");
 
 router.post("/", verifyToken, verifyInputs, errorhandler, createMember);
+
 module.exports = router;
