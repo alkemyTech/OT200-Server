@@ -1,4 +1,6 @@
-const { findAll, createCategory, getCategory, deleteOne } = require('../services/categories');
+
+const { findAll, updateData, createCategory, getCategory, deleteOne } = require('../services/categories');
+
 
 
 const deleteCategory = async (req, res)=> {
@@ -58,9 +60,20 @@ const getAllCategories = async (req, res) => {
     } catch (error) {
         res.status(500).json(error.message);
     }
-
-
 };
+
+
+
+const updateCategory = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const category = await updateData(req.body, id);
+    return res.status(category.id ? 200 : 404).json(category);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
 
 const getOneCategory = async(req, res) => {
 
@@ -87,9 +100,6 @@ const getOneCategory = async(req, res) => {
 
 };
 
-const updateCategory = (req, res) => {
-
-};
 
 
 module.exports = {
