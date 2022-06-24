@@ -1,4 +1,4 @@
-const db = require('../models');
+const db = require("../models");
 
 const deleteOne = async (id) => {
 
@@ -11,8 +11,24 @@ const findAll = async() => {
     
     const category = await db.Categories.findAll({attributes: ['name']});
 
-    return category;
-}
+  return category;
+};
+
+const updateData = async (body, categoryId) => {
+  const category = await db.Category.update(
+    {
+      name: body.name,
+      description: body.description,
+      image: body.image,
+    },
+    {
+      where: {
+        id: parseInt(categoryId),
+      },
+    }
+  );
+  return category;
+};
 
 const createCategory = async(data) => {
 
@@ -24,6 +40,38 @@ const createCategory = async(data) => {
 };
 
 
+const categoryList = async( data ) => {
+
+    const currentPage = data && data > 0 ? data : 0;
+
+    const limit = 1;
+
+    const offset = currentPage * limit;
+
+    const prevPage = currentPage - 1;
+
+    const nextPage = currentPage + 1;
+    
+
+     const { count, rows  } = await db.Categories.findAndCountAll({ offset, limit });
+
+
+    const totalPages = Math.ceil(count / limit);
+
+    if(Number(currentPage) > totalPages - 1) throw { message: `Solo hay un total de ${totalPages} paginas.`, status: 400 } ;
+
+     const categories = { 
+        prevPage: prevPage < 0 ? null : 'http://localhost:3000/categories/catalogue?page=' + prevPage,            
+        currentPage: `http://localhost:3000/categories/catalogue?page=${currentPage}`,
+        nextPage:  nextPage >= totalPages  ? null : 'http://localhost:3000/categories/catalogue?page=' + nextPage ,
+        totalPages,
+        rows,
+    };         
+
+    return categories;
+    
+};
+
 const getCategory = async( id ) => {
 
     const category = await db.Categories.findByPk( id );
@@ -31,14 +79,13 @@ const getCategory = async( id ) => {
     if( !category ) throw { message:`La categoria con id: -${ id }- no existe en DB`, status: 404 };
 
     return category;
-
-};
-
+}
 
 
 module.exports = {
     findAll,
     createCategory,
+    deleteOne,
+    categoryList,
     getCategory,
-    deleteOne
 };

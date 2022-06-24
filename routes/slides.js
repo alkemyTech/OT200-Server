@@ -4,7 +4,8 @@ const {
   createNewSlide,
   deleteSlide,
   updateSlide,
-  findSlide
+  findSlide,
+  slidesList,
 } = require("../controllers/slides.controller");
 const { upload } = require("../middleware/multer");
 const verifyToken = require("../middleware/verifyToken");

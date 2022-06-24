@@ -6,6 +6,7 @@ const {
 const {
   newComment,
   updateComment,
+  getAllComments,
 } = require("../controllers/comments.controller");
 
 const verifyOwner = require("../middleware/verifyComment");
@@ -13,9 +14,8 @@ const verifyOwner = require("../middleware/verifyComment");
 const express = require('express');
 const router = express.Router();
 const {verifyToken, checkAdmin} = require('../middleware');
-const getAllComments = require('../controllers/comment.controller');
-const commentsFields = require('../helpers/checkCommentsFields');
-const { newComment } = require('../controllers/comments.controller');
+
+
 
 router.get('/', 
 verifyToken, 
