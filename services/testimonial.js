@@ -43,8 +43,6 @@ const deleteOne = async (id) => {
 
     return testimonialDel;
 
+}
+    
 module.exports = { create, testimonalUpdate, deleteOne, find }
-
-
-
-

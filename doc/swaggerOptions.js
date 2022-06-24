@@ -15,4 +15,4 @@ const options = {
     apis: ["./doc/*.yaml"],
 };
 
-module.exports = options; 
+module.exports = options;  

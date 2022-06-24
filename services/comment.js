@@ -1,3 +1,5 @@
+
+const { Comment: DB } = require("../models");
 const db = require('../models');
 
 const getAll = async () => {
@@ -13,14 +15,35 @@ const getAll = async () => {
 
 }
 
-const createComment = async( data ) => {
 
-    const comment = new db.Comment ( data );
+const createComment = async (data) => {
+  const comment = new DB(data);
 
-    await comment.save();
+  await comment.save();
 
+  return comment;
+};
+
+const changeComment = async (body, commentId) => {
+  const comment = await DB.update(
+    { body },
+    {
+      where: {
+        id: parseInt(commentId),
+      },
+    }
+  );
+
+  if (!comment) {
+    return { success: false, message: "User not found" };
+  } else {
     return comment;
+  }
+};
 
+const findComment = async (idComment) => {
+  const comment = await DB.findOne({ where: { id: parseInt(idComment) } });
+  return comment;
 };
 
 const allCommentsFromPost = async( id ) => {
@@ -38,7 +61,9 @@ const allCommentsFromPost = async( id ) => {
 
 
 module.exports = {
-    createComment,
-    allCommentsFromPost,
+  createComment,
+  changeComment,
+  findComment,
+  allCommentsFromPost,
     getAll,
-}
+};
