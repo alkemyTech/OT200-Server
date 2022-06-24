@@ -64,9 +64,6 @@ const slidesList = async (req, res) => {
   }
 };
 
-module.exports = { createNewSlide, deleteSlide, slidesList };
-
-
 const updateSlide = async (req, res) => {
   const { id } = req.params;
   try {
@@ -107,5 +104,5 @@ const findSlide = async (req, res) => {
 
 }
 
-module.exports = { createNewSlide, deleteSlide,updateSlide, findSlide };
+module.exports = { createNewSlide, deleteSlide,updateSlide, findSlide, slidesList };
 
