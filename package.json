@@ -24,7 +24,9 @@
     "mz": "^2.7.0",
     "sequelize": "^6.20.1",
     "sqlite3": "^5.0.8",
-    "supertest": "^6.2.3"
+    "supertest": "^6.2.3",
+    "swagger-jsdoc": "^6.2.1",
+    "swagger-ui-express": "^4.4.0"
   },
   "devDependencies": {
     "jest": "^28.1.1",
