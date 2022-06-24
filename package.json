@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "nodemon ./bin/www",
+    "text": "npx jest --detectOpenHandles"
   },
   "dependencies": {
     "@sendgrid/mail": "^7.7.0",
