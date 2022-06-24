@@ -30,8 +30,6 @@ const findId = async (id) => {
 
 }
 
-<<<<<<< HEAD
-=======
 const updateNewsService = async (id, dataNews) => {
 
     const { name, content, image } = dataNews;
@@ -51,16 +49,11 @@ const updateNewsService = async (id, dataNews) => {
     return update;
 
 }
->>>>>>> main
 
 
 module.exports = {
     findId,
     create,
-<<<<<<< HEAD
+    updateNewsService,
     findAll
 }
-=======
-    updateNewsService
-}
->>>>>>> main

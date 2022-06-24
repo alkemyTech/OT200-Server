@@ -34,7 +34,7 @@ const findAllNews = async (req, res) => {
         
         const totalPages = Math.ceil(count / limit);
 
-        if(totalPages < page || page < 1){
+        if(totalPages < page || page == 0){
             return res.status(404).json({
                 message: "No existe la página solicitada"
             })
