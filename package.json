@@ -22,7 +22,9 @@
     "mysql2": "^2.2.3",
     "mz": "^2.7.0",
     "sequelize": "^6.20.1",
-    "sqlite3": "^5.0.8"
+    "sqlite3": "^5.0.8",
+    "swagger-jsdoc": "^6.2.1",
+    "swagger-ui-express": "^4.4.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.16",
