@@ -65,7 +65,7 @@ const createTestimonial = async (req, res) => {
     }
 };
 
-const updateTestimonial = async (req, res) => {
+const updateTestimonial = (req, res) => {
     const { id } = req.params;
     try {
         const testimonial = await testimonalUpdate (req.body, id);
