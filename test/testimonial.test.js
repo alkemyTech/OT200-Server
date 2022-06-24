@@ -19,7 +19,7 @@ describe("POST /testimonials", () => {
   const newTestimonial = {
     name: "Jhon test",
     image: "Jhon-test.jpg",
-    content: "Hello Jhon test",
+    content: "Hello Jhon test",    
   };
 
   describe("token is not send", () => {
@@ -30,8 +30,10 @@ describe("POST /testimonials", () => {
         .post("/testimonials")
         .set("x-access-token", emptyToken)
         .expect(401)
-        .expect("Content-Type", /application\/json/);
-
+        .expect("Content-Type", /application\/json/)
+        .expect((res) => {            
+          expect(res.body).toEqual({error: "No se ha enviado el token de autenticación" });
+         })
     });
 
   });
@@ -44,8 +46,10 @@ describe("POST /testimonials", () => {
         .post("/testimonials")
         .set("x-access-token", invalidToken)
         .expect(400)
-        .expect("Content-Type", /application\/json/);
-
+        .expect("Content-Type", /application\/json/)
+        .expect((res) => {            
+          expect(res.body).toEqual({ message: "Token invalido" });
+         })
     });
 
   });
@@ -59,7 +63,12 @@ describe("POST /testimonials", () => {
         .set("x-access-token", adminToken)
         .send(newTestimonial)
         .expect(201)
-        .expect("Content-Type", /application\/json/);
+        .expect("Content-Type", /application\/json/)
+        .expect((res) => {
+          const {id, name, image, content} = res.body;
+          data = {id, name, image, content};          
+          expect(data).toEqual({id, ...newTestimonial});
+         })
 
     });
 
@@ -79,7 +88,28 @@ describe("POST /testimonials", () => {
         .set("x-access-token", adminToken)
         .send(newTestimonial)
         .expect(400)
-        .expect("Content-Type", /application\/json/);
+        .expect("Content-Type", /application\/json/)
+        .expect((res) => {            
+          expect(res.body).toEqual({
+            "errors": [
+              {
+                "msg": "Field must exist",
+                "param": "name",
+                "location": "body"
+              },
+              {
+                "msg": "Field must not be empty",
+                "param": "name",
+                "location": "body"
+              },
+              {
+                "msg": "Must be at between 3 and 15 characters long",
+                "param": "name",
+                "location": "body"
+              }
+            ]
+          });
+         })
 
     });
 
@@ -94,8 +124,12 @@ describe("POST /testimonials", () => {
         .set("x-access-token", standardToken)
         .send(newTestimonial)
         .expect(403)
-        .expect("Content-Type",/application\/json/);
-
+        .expect("Content-Type",/application\/json/)
+        .expect((res) => {            
+          expect(res.body).toEqual({
+            "msg": "No tiene los permisos necesarios para acceder a esta información, comuniquese con admisntración"
+          });
+         })
     })
     
   });
@@ -112,7 +146,10 @@ describe("DELETE /testimonials", () => {
         .delete(`/testimonials/${1}`)
         .set("x-access-token", emptyToken)
         .expect(401)
-        .expect("Content-Type", /application\/json/);
+        .expect("Content-Type", /application\/json/)
+        .expect((res) => {            
+          expect(res.body).toEqual({error: "No se ha enviado el token de autenticación" });
+         })
 
     });
 
@@ -126,7 +163,10 @@ describe("DELETE /testimonials", () => {
         .delete(`/testimonials/${1}`)
         .set("x-access-token", invalidToken)
         .expect(400)
-        .expect("Content-Type", /application\/json/);
+        .expect("Content-Type", /application\/json/)
+        .expect((res) => {            
+          expect(res.body).toEqual({ message: "Token invalido" });
+         })
 
     });
 
@@ -140,7 +180,10 @@ describe("DELETE /testimonials", () => {
         .delete(`/testimonials/${1}`)
         .set("x-access-token", adminToken)
         .expect(200)
-        .expect("Content-Type", /application\/json/);
+        .expect("Content-Type", /application\/json/)
+        .expect((res) => {           
+          expect(res.body).toEqual({message: "Deleted", id: "1"});
+         })
 
     });
 
@@ -154,7 +197,10 @@ describe("DELETE /testimonials", () => {
         .delete(`/testimonials/${123}`)
         .set("x-access-token", adminToken)
         .expect(404)
-        .expect("Content-Type", /application\/json/);
+        .expect("Content-Type", /application\/json/)
+        .expect((res) => {           
+          expect(res.body).toEqual({error: true, message: "Testimonial not found"});
+         })
 
     });
 
@@ -168,7 +214,10 @@ describe("DELETE /testimonials", () => {
         .delete(`/testimonials/${"asdsad"}`)
         .set("x-access-token", adminToken)
         .expect(500)
-        .expect("Content-Type", /application\/json/);
+        .expect("Content-Type", /application\/json/)
+        .expect((res) => {           
+          expect(res.body).toEqual({error: true, message: "An error has ocurred"});
+         })
 
     });
 
@@ -182,7 +231,12 @@ describe("DELETE /testimonials", () => {
         .delete(`/testimonials/${1}`)
         .set("x-access-token", standardToken)        
         .expect(403)
-        .expect("Content-Type",/application\/json/);
+        .expect("Content-Type",/application\/json/)
+        .expect((res) => {            
+          expect(res.body).toEqual({
+            "msg": "No tiene los permisos necesarios para acceder a esta información, comuniquese con admisntración"
+          });
+         })
 
     })
     
