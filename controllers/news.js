@@ -21,7 +21,7 @@ const findAllNews = async (req, res) => {
     const page = parseInt(req.query.page)
 
     try {
-        
+
         const pages = Number(page);
 
         const news = await findAll(pages);
@@ -38,50 +38,6 @@ const findAllNews = async (req, res) => {
         })
     }
 }
-    
-
-
-
-    // try {
-        
-        //     const page = parseInt(req.query.page)
-        
-    //     const limit = 10;
-
-    //     const offset = page > 0 ? (page - 1) * limit : 0;
-    
-    //     const prevPage = (page - 1);
-
-    //     const nextPage = (page + 1);        
-
-    //     const news = await findAll(offset, limit);
-
-    //     const {count} = news
-        
-    //     const totalPages = Math.ceil(count / limit);
-
-    //     if(totalPages < page || page == 0){
-    //         return res.status(404).json({
-    //             message: "No existe la página solicitada"
-    //         })
-    //     }
-       
-    //     res.status(200).json({
-    //         prevPage : `${ prevPage <= 0 ? 'No hay página previa' : 'http://localhost:3000/news?page=' + prevPage }`,
-    //         currentPage: page,
-    //         nextPage : `${  nextPage > totalPages  ? 'No hay página siguiente' : 'http://localhost:3000/news?page=' + nextPage }`,
-    //         news,
-    //         totalPages
-    //     });
-   
-    // } catch (error) {
-    //     res.status(500).json({
-    //         message: error.message,
-    //         error
-    //     });
-    // }
-
-// }
 
 const detailNews = async (req, res) => {
     try{

@@ -45,16 +45,6 @@ const findAll = async (page) => {
 
     return newsAll
 
-
-
-
-
-    // const news = await db.News.findAndCountAll({
-    //     offset,
-    //     limit
-    // });
-
-    // return news;
 }
 
 const findId = async (id) => {
