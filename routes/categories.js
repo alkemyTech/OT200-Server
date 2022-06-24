@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const  { getAllCategories, newCategory, getOneCategory, deleteCategory, updateCategory  } = require('../controllers/categories');
+const  { getAllCategories, newCategory, getOneCategory, deleteCategory, updateCategory, CategoriesList } = require('../controllers/categories');
 
 const verifyToken = require('../middleware/verifyToken');
 const checkAdmin = require('../middleware/checkAdmin');
@@ -23,7 +23,10 @@ router.post('/',verifyToken , checkAdmin, validatorHandler( categoriesFields ), 
 
 router.get("/", verifyToken, checkAdmin, getAllCategories);
 
+router.get("/catalogue", verifyToken, CategoriesList);
+
 router.get("/:id", verifyToken, checkAdmin, getOneCategory);
+
 
 router.delete(
   "/:id",
