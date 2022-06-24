@@ -44,7 +44,7 @@ const categoryList = async( data ) => {
 
     const currentPage = data && data > 0 ? data : 0;
 
-    const limit = 10;
+    const limit = 1;
 
     const offset = currentPage * limit;
 

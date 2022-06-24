@@ -108,6 +108,9 @@ const getOneCategory = async(req, res) => {
         res.status(200).json({error: false, message: 'ok', category});
         
     } catch (error) {
+
+        console.log(`LOG: ${error.message}`);
+
         if( !error.status ) {
            return res.status(500).json({
                 error: true,
