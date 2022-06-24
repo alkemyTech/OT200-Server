@@ -1,4 +1,5 @@
-const db = require("../models/index");
+const db = require('../models/index');
+
 
 const create = async (dataNews) => {
             
@@ -29,10 +30,37 @@ const findId = async (id) => {
 
 }
 
+<<<<<<< HEAD
+=======
+const updateNewsService = async (id, dataNews) => {
+
+    const { name, content, image } = dataNews;
+
+    const update = await db.News.update({
+        name,
+        content,
+        image
+        },{
+            where : {id}
+        });
+
+    if(update == 0) {
+        throw new Error("Error al actualizar noticia");
+    }
+    
+    return update;
+
+}
+>>>>>>> main
 
 
 module.exports = {
     findId,
     create,
+<<<<<<< HEAD
     findAll
 }
+=======
+    updateNewsService
+}
+>>>>>>> main
