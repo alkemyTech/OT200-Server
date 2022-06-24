@@ -31,68 +31,112 @@ beforeEach(async () => {
 })
 
 
-// describe('GET /news/:id', () => {
+describe('GET /news/:id', () => {
 
-//     describe('Muestra una noticia',  () => {
+    describe('Muestra una noticia',  () => {
+
+    const id = 1
                 
-//     test('Deberia mostrar una noticia', async () => {
-//         await request(app)
-//         .get(`/news/${1}`)
-//         .set('Accept', /application\/json/)
-//         .expect(200)
-//     })
-// })
+    test('Deberia mostrar una noticia', async () => {
+        await request(app)
+        .get(`/news/${id}`)        
+        .set('x-access-token', tokenPublic)
+        .set('Accept', /application\/json/)
+        .expect(200)
+        .expect(response => {
+            expect(response.body.message).toEqual('Noticia encontrada')
+        })
+    })
+})
 
-//       describe('Noticia inexistente', () => {
-//         const newsError = {
-//             id: 0
-//         }
+      describe('Noticia inexistente', () => {
     
+      test('Error por id inexistente', async () => {
+        await request(app)
+          .get(`/news/${0}`)
+          .set('x-access-token', token)
+          .send(news)
+          .expect(404)
+          .expect('Content-Type', /application\/json/)
+          .expect(response => {
+            expect(response.body.message).toEqual('No se encontró la noticia')
+        })
+      })
+  })
+ })
 
-//       test('Error por id inexistente', async () => {
-//         await request(app)
-//           .get(`/news/${0}`)
-//           .set('x-access-token', tokenPublic)
-//           .send(newsError)
-//           .expect(404)
-//           .expect('Content-Type', /application\/json/)
-//       })
-//   })
-//  })
 
+describe('POST /news', () => {
 
-// describe('POST /news', () => {
+    describe('Crea una noticia', () => {
 
-//     describe('Crea una noticia', () => {
+        test('Deberia crear una noticia', async () => {
+            await request(app)
+            .post('/news')
+            .set('x-access-token', token)
+            .send(news)
+            .expect(201)
+            .expect('Content-Type', /application\/json/)
+            .expect(response => {
+                expect(response.body).toBeInstanceOf( Object );
+            })            
+        })
+    })
 
-//         test('Deberia crear una noticia', async () => {
-//             await request(app)
-//             .post('/news')
-//             .set('x-access-token', token)
-//             .send(news)
-//             .expect(201)
-//             .expect('Content-Type', /json/)            
-//         })
-//     })
+    describe('Error por no cumplir con las validaciones', () => {
 
-//     describe('Error por no cumplir con las validaciones', () => {
+        const news = {
+            name: '',
+            content: '',
+            image: ''
+        }
 
-//         const news = {
-//             name: '',
-//             content: '',
-//             image: ''
-//         }
-
-//         test('Deberia mostrar error por no cumplir con las validaciones', async () => {
-//             await request(app)
-//             .post('/news')
-//             .set('x-access-token', token)
-//             .send(news)
-//             .expect(400)
-//             .expect('Content-Type', /json/)            
-//         })
-//     })
-// })
+        test('Deberia mostrar error por no cumplir con las validaciones', async () => {
+            await request(app)
+            .post('/news')
+            .set('x-access-token', token)
+            .send(news)
+            .expect(400)
+            .expect('Content-Type', /application\/json/)
+            .expect(response => {
+                expect(response.body).toEqual({
+                    "errors": [
+                        {
+                            "value": '',
+                            "msg": "Image is required",
+                            "param": "image",
+                            "location": "body"
+                        },
+                        {
+                            "value": '',
+                            "msg": "Title is required",
+                            "param": "name",
+                            "location": "body"
+                        },
+                        {
+                            "value": '',
+                            "msg": "Title must be between 3 and 15 characters long",
+                            "param": "name",
+                            "location": "body"
+                        },
+                        {
+                            "value": '',
+                            "msg": "Content is required",
+                            "param": "content",
+                            "location": "body"
+                        },
+                        {
+                            "value": '',
+                            "msg": "Content must be at least 10 characters long",
+                            "param": "content",
+                            "location": "body"
+                        },
+                      ]
+                })                
+            })             
+        })
+    })
+})
 
 // describe('GET /news', () => {
 
@@ -104,7 +148,7 @@ beforeEach(async () => {
 //               .set('x-access-token', tokenPublic) 
 //             .send(news)
 //             .expect(200)
-//             .expect('Content-Type', /json/)        
+//             .expect('Content-Type', /application\/json/)        
 //         }) 
 //     })
 
@@ -116,7 +160,7 @@ beforeEach(async () => {
 //             .get('/news')
 //             .send(news)
 //             .expect(404)
-//             .expect('Content-Type', /json/)        
+//             .expect('Content-Type', /application\/json/)        
 //         })
 //     })
 // })
@@ -134,11 +178,14 @@ describe('PUT /news/:id', () => {
 
         test('Deberia actualizar una noticia', async () => {
             await request(app)
-            .put(`/news/${1}`)
+            .put(`/news/${newsUpdate.id}`)
             .set('x-access-token', token)
             .send(newsUpdate)
             .expect(200)
-            .expect('Content-Type', /json/)                        
+            .expect('Content-Type', /application\/json/)
+            .expect(response => {
+                expect(response.body.msg).toEqual('Noticia actualizada')
+            })                      
     })
 })
 
@@ -147,30 +194,69 @@ describe('PUT /news/:id', () => {
             test('Deberia mostrar error por no ser Administrador', async () => {
                 await request(app)
                 .put(`/news/${1}`)                
-                .set('x-access-token', '')
+                .set('x-access-token', tokenPublic)
                 .send(news)
-                .expect(401)
-                .expect('Content-Type', /json/)                
+                .expect(403)
+                .expect('Content-Type', /application\/json/)
+                .expect(response => {
+                    expect(response.body.msg).toEqual('No tiene los permisos necesarios para acceder a esta información, comuniquese con admisntración')                    
+                })                
             }
         )
     }
     )
 
-    describe('Error por no encontrar la noticia', () => {
+    describe('Error por no cumplir con las validaciones', () => {
+
         const news = {
-            id: '',
-            title: 'New title',
-            content: 'New content',
-            image: 'newImageTest.jpg'
+            name: '',
+            content: '',
+            image: ''
         }
 
-        test('Deberia mostrar error por no encontrar la noticia', async () => {
+        test('Deberia mostrar error por no cumplir con las validaciones', async () => {
             await request(app)
-            .put(`/news/${news.id}`)
+            .put(`/news/${1}`)
             .set('x-access-token', token)
             .send(news)
-            .expect(404)
-            .expect('Content-Type', "text/html; charset=utf-8")            
+            .expect(400)
+            .expect('Content-Type', /application\/json/)
+            .expect(response => {
+                expect(response.body).toEqual({
+                    "errors": [
+                        {
+                            "value": '',
+                            "msg": "Image is required",
+                            "param": "image",
+                            "location": "body"
+                        },
+                        {
+                            "value": '',
+                            "msg": "Title is required",
+                            "param": "name",
+                            "location": "body"
+                        },
+                        {
+                            "value": '',
+                            "msg": "Title must be between 3 and 15 characters long",
+                            "param": "name",
+                            "location": "body"
+                        },
+                        {
+                            "value": '',
+                            "msg": "Content is required",
+                            "param": "content",
+                            "location": "body"
+                        },
+                        {
+                            "value": '',
+                            "msg": "Content must be at least 10 characters long",
+                            "param": "content",
+                            "location": "body"
+                        },
+                      ]
+                })                
+            })             
         })
     })
 })
@@ -187,7 +273,7 @@ describe('PUT /news/:id', () => {
 //         .delete(`/news/${news.id}`)
 //         .set('x-access-token', token)
 //         .expect(200)
-//         .expect('Content-Type', /json/)         
+//         .expect('Content-Type', /application\/json/)         
 //     })
 //     })
 
@@ -201,7 +287,7 @@ describe('PUT /news/:id', () => {
 //             .delete(`/news/${news.id}`)
 //             .set('x-access-token', token)
 //             .expect(404)
-//             .expect('Content-Type', /json/)            
+//             .expect('Content-Type', /application\/json/)            
 //         })
 //     })
 
@@ -212,7 +298,7 @@ describe('PUT /news/:id', () => {
 //             .delete('/news/:id')
 //             .send(news)
 //             .expect(401)
-//             .expect('Content-Type', /json/)            
+//             .expect('Content-Type', /application\/json/)            
 //         })
 //     })
 
