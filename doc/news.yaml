@@ -100,7 +100,7 @@ paths:
             application/json:
               schema:
                 type: object
-                ref: '#/components/schemas/News'
+                $ref: '#/components/schemas/News'
         400:
           $ref: '#/components/schemas/BadRequest'
         500:
