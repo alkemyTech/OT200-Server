@@ -27,7 +27,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerJsdoc(options)));
 
 app.use('/', indexRouter);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specsNews))
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
