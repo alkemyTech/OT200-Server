@@ -5,6 +5,7 @@ const userToken = require('../middleware/userToken');
 const {welcomeMail} = require('../services/sendMail');
 
 
+
 const createUser = async (req, res) => {
     try {
         const { firstName, lastName, email, password, photo } = req.body;
