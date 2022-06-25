@@ -74,7 +74,7 @@ components:
         location: body
 
   securitySchemes:
-    xAccessTokenAuth:
+    ApiKeyAuth:
       type: apiKey
       in: header
       name: x-access-token
@@ -89,13 +89,13 @@ components:
       description: the member id.
 
 security:
-  - xAccessTokenAuth: []
+  - ApiKeyAuth: []
     
 paths:
   /members:
     get:
       security:
-      - xAccessTokenAuth: []
+      - ApiKeyAuth: []
       summary: Returns a list of members.
       tags:
         - members
@@ -110,7 +110,7 @@ paths:
                   $ref: '#/components/schemas/Member'
     post:
       security:
-      - xAccessTokenAuth: [] 
+      - ApiKeyAuth: [] 
       summary: Create a new member.
       tags:
         - members
@@ -143,7 +143,7 @@ paths:
   /members/{id}:
     delete:
       security:
-      - xAccessTokenAuth: []
+      - ApiKeyAuth: []
       summary: Delete a member by id.
       tags:
         - members
