@@ -21,17 +21,29 @@ components:
         - lastName
         - email
         - password
-        - photo
-        - roleId
         
       example:
         firstName: Test
         lastName: User
         email: testinguser@test.com
         password: Testinguser@123
-        photo: http://testing.png.com
-        roleId: 1
+        photo: PhotoUser
     
+    UserLogin:
+      type: object
+      properties: 
+        email: 
+          type: string
+        password:
+          type: string
+      requied:
+        - email
+        - password    
+      
+      example:
+        email: UserEmail
+        password: UserPassword
+
     validationError:
       type: object
       properties:
@@ -93,6 +105,14 @@ paths:
     post:
       tags:
       - register
+      summary: Create a new user
+      requestBody:
+        description: A JSON object containing a new user information
+        required: true
+        content: 
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
       responses:
         201:
           description: A JSON object with new user data.
@@ -125,6 +145,14 @@ paths:
     post:
       tags:
       - login
+      summary: Create a new user
+      requestBody:
+        description: A JSON object containing a user login information
+        required: true
+        content: 
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLogin'
       responses:
         200:
           description: Login successful.

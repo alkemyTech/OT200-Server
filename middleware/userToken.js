@@ -10,7 +10,7 @@ const generateToken = (user) => {
         expiresIn: '1d'
     };
 
-    return jwt.sign(tokenSign, process.env.SECRET_KEY, expire);
+    return jwt.sign(tokenSign, process.env.SECRET_API_KEY, expire);
 }
   
 
