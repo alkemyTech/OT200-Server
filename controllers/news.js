@@ -1,4 +1,5 @@
-const { create, findId, deleteOne } = require("../services/news");
+const {create, updateNewsService, findId, deleteOne} = require('../services/news');
+
 
 const createNews = async (req, res) => {
     try {
@@ -43,23 +44,18 @@ const detailNews = async (req, res) => {
 
 const deleteNews = async (req, res) => {
 
-    const id = req.params.id;
-
     try {
-
-        const newsDb = await findId(id);
-        console.log(newsDb);
-
-        if (newsDb === null) {
-            
+        const id = req.params.id;
+        
+        const deletedNew = await deleteOne(id);
+        
+        if (deletedNew === 0) {            
             return res.status(404).json({
                 message: "News not found",
-                newsDb
+                // newsDb
             })
 
         }
-        const deletedNew = await deleteOne(id);
-
             return res.status(200).json({
                 message: "Deleted",
                 id: id
@@ -69,16 +65,35 @@ const deleteNews = async (req, res) => {
         
         res.status(500).json({
             error: true,
-            message: "An error has ocurred"
+            message: error.message
         })
 
     }
 
 }
 
+const updateNews = async (req, res) => {
+    try{
+        const {id} = req.params
 
-module.exports = {
-    createNews, 
-    detailNews,
-    deleteNews
-    };
+        const {name, content, image} = req.body;
+
+        const update = await updateNewsService(id,{name, content, image});
+        
+        res.status(200).json({
+            message: 'Noticia actualizada',
+            data: update,
+            newData: { name, content, image }
+
+        });
+
+    }catch(error){
+        res.status(500).send({
+            message: error.message,
+        });
+        console.log(error);
+    }
+}
+
+
+module.exports = {createNews, detailNews, updateNews, deleteNews};

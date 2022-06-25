@@ -1,5 +1,6 @@
 
-const { findAll, deleteOne, createCategory } = require('../services/categories');
+const { findAll, updateData, createCategory, getCategory, deleteOne, categoryList } = require('../services/categories');
+
 
 
 const deleteCategory = async (req, res)=> {
@@ -50,26 +51,80 @@ const newCategory = async(req, res) => {
 };
 
 const getAllCategories = async (req, res) => {
+
     try {
-        const categories = await findAll();
 
-
-        res.json(categories);
+     const categories = await findAll();
+     res.json(categories);
 
     } catch (error) {
         res.status(500).json(error.message);
     }
+};
 
+const CategoriesList = async(req, res) => {
+
+    const { page } = req.query;
+
+    try {
+
+        if( !page ) return res.status(400).json({ error: true, message: 'Bad request' });
+
+        
+        const pages = Number(page);
+        const categories = await categoryList( pages );
+
+        return res.status(200).json({ error:false, message: 'ok', categories });
+        
+        
+    } catch (error) {
+        if( !error.status ) {
+            return res.status(500).json({error: true, message: error.message, categories: null });
+        }
+         res.status( error.status ).json({error: true, message: error.message, categories: null });
+
+    }
+}
+
+const updateCategory = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const category = await updateData(req.body, id);
+    return res.status(category.id ? 200 : 404).json(category);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+
+const getOneCategory = async(req, res) => {
+
+    const { id } = req.params;
+
+    try {
+
+        const category = await getCategory( id );
+    
+        res.status(200).json({error: false, message: 'ok', category});
+        
+    } catch (error) {
+
+        console.log(`LOG: ${error.message}`);
+
+        if( !error.status ) {
+           return res.status(500).json({
+                error: true,
+                message: 'Error en el servidor, comunicarse con el administrador ',
+                category: null
+            });
+        }
+
+        res.status(error.status).json({error: true, message: error.message, category: null});
+
+    }
 
 };
 
-const getOneCategory = (req, res) => {
-
-};
-
-const updateCategory = (req, res) => {
-
-};
 
 
 module.exports = {
@@ -78,5 +133,9 @@ module.exports = {
     getOneCategory,
     updateCategory,
     deleteCategory,
+    CategoriesList
 }
+
+
+
 
