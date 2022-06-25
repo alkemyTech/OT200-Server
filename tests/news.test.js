@@ -107,16 +107,17 @@ describe('POST /news', () => {
 describe('GET /news/:id', () => {
 
     describe('Muestra una noticia',  () => {
-                
-    test('Debera mostrar una noticia', async () => {
+        
+        test('Debera mostrar una noticia', async () => {
+
         await request(app)
-        .get(`/news/${1}`)        
-        .set('x-access-token', token)
-        .set('Accept', /application\/json/)
-        .expect(200)
-        .expect(response => {
-            expect(response.body.message).toEqual('Noticia encontrada')
-        })
+            .get(`/news/${1}`)        
+            .set('x-access-token', token)
+            .set('Accept', /application\/json/)
+            .expect(200)
+            .expect(response => {
+                expect(response.body.message).toEqual('Noticia encontrada')
+            })
     })
 })
 
@@ -145,7 +146,8 @@ describe('PUT /news/:id', () => {
             image: 'newImageTest.jpg'
         }
 
-        test('Debera actualizar una noticia', async () => {
+        test('Debera actualizar una noticia', async () => {           
+
             await request(app)
             .put(`/news/${1}`)
             .set('x-access-token', token)
@@ -235,6 +237,8 @@ describe('DELETE /news/:id', () => {
     describe('Elimina una noticia', () => {
 
     test('Debera eliminar una noticia', async () => {
+        
+
         await request(app)
         .delete(`/news/${1}`)
         .set('x-access-token', token)
