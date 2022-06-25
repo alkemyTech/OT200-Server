@@ -1,6 +1,6 @@
 tags:
-  -name: News
-  description: Documentacion de Novedades.
+  - name: News
+    description: Documentacion de Novedades.
 
 components:
   schemas:
