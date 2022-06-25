@@ -1,4 +1,5 @@
-const { create, findId, findAll, updateNewsService } = require("../services/news");
+const {create, updateNewsService, findId, deleteOne, findAll} = require('../services/news');
+
 
 const createNews = async (req, res) => {
     try {
@@ -64,6 +65,35 @@ const detailNews = async (req, res) => {
 
 }
 
+const deleteNews = async (req, res) => {
+
+    try {
+        const id = req.params.id;
+        
+        const deletedNew = await deleteOne(id);
+        
+        if (deletedNew === 0) {            
+            return res.status(404).json({
+                message: "News not found",
+            })
+
+        }
+            return res.status(200).json({
+                message: "Deleted",
+                id: id
+            })
+        
+    } catch (error) {
+        
+        res.status(500).json({
+            error: true,
+            message: error.message
+        })
+
+    }
+
+}
+
 const updateNews = async (req, res) => {
     try{
         const {id} = req.params
@@ -88,4 +118,4 @@ const updateNews = async (req, res) => {
 }
 
 
-module.exports = {createNews, detailNews, updateNews, findAllNews};
+module.exports = {createNews, detailNews, updateNews, deleteNews, findAllNews};
