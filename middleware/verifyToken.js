@@ -6,7 +6,7 @@ const verifyToken = (req, res, next) => {
     if (!token) {
         return res.status(401).send({ error: "No se ha enviado el token de autenticación" });
     } else {
-        JWT.verify(token, process.env.SECRET_KEY, async (error, user) => {
+        JWT.verify(token, process.env.SECRET_API_KEY, async (error, user) => {
             if (error) {
                 return res.status(400).send({ message: "Token invalido" });
             };
