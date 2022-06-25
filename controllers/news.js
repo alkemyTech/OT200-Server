@@ -52,7 +52,6 @@ const deleteNews = async (req, res) => {
         if (deletedNew === 0) {            
             return res.status(404).json({
                 message: "News not found",
-                // newsDb
             })
 
         }
