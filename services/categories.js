@@ -88,4 +88,5 @@ module.exports = {
     deleteOne,
     categoryList,
     getCategory,
+    updateData
 };
