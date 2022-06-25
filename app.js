@@ -5,16 +5,9 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors')
 require('dotenv').config()
-<<<<<<< HEAD
-const swaggerUi = require('swagger-ui-express')
-const swaggerJsDoc = require('swagger-jsdoc')
-const options = require('./doc/swaggerOption')
-
-=======
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const options = require('./doc/swaggerOptions')
->>>>>>> main
 
 const indexRouter = require('./routes/index');
 
