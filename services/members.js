@@ -1,5 +1,5 @@
 const db = require("../models");
-const Member = db.member;
+const Member = db.Member;
 
 const find = async () => {
     

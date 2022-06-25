@@ -26,7 +26,6 @@ router.use('/news', newsRouter);
 router.use('/comments', commentsRouter);
 router.use('/slides', slidesRouter);
 router.use('/testimonials', testimonialsRouter);
-router.use('/categories', categoriesRouter);
 router.use('/post', postRouter);
 router.use('/news', newsRouter);
 router.use('/activities',activitiesRouter)
