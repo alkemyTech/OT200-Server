@@ -68,13 +68,13 @@ components:
           example:
             msg: Error con el servidor.
   securitySchemes:
-    tokenAuth: 
+    ApiKeyAuth: 
       type: apiKey
       in: header
       name: x-access-token
       
 security: 
-    - tokenAuth: []
+    - ApiKeyAuth: []
 
 
 
@@ -85,7 +85,7 @@ paths:
       summary: Crea las noticias.
       tags: [News]
       security:
-      - tokenAuth: []
+      - ApiKeyAuth: []
       requestBody:
         required: true
         content:
@@ -114,7 +114,8 @@ paths:
         name: page
         schema: 
           type: integer
-          description: IQuery de page.    
+          description: Query de page.  
+          required: true  
       responses:
         200:
           description: OK
@@ -132,13 +133,14 @@ paths:
       summary: Muestra la noticia por id.
       tags: [News]
       security:
-        - tokenAuth: []
+        - ApiKeyAuth: []
       parameters:
         - in: path
           name: id
           schema: 
             type: integer
             description: Id de noticia.
+          required: true
       responses:
         200:
           description: OK
@@ -154,13 +156,14 @@ paths:
       summary: Actualiza la noticia
       tags: [News]
       security:
-        - tokenAuth: []
+        - ApiKeyAuth: []
       parameters:
         - in: path
           name: id
           schema: 
             type: integer
             description: Id de la noticia.
+          required: true
       requestBody:
         required: true
         content:
@@ -191,13 +194,14 @@ paths:
       summary: Borra la noticia.
       tags: [News]
       security:
-        - tokenAuth: []
+        - ApiKeyAuth: []
       parameters:
         - in: path
           name: id
           schema: 
             type: integer
             description: Id de la noticia.      
+          required: true 
       responses:
         200:
           description: Noticia borrada correctamente.
