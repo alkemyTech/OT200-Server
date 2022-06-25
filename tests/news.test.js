@@ -31,46 +31,11 @@ beforeEach(async () => {
 })
 
 
-describe('GET /news/:id', () => {
-
-    describe('Muestra una noticia',  () => {
-
-    const id = 1
-                
-    test('Deberia mostrar una noticia', async () => {
-        await request(app)
-        .get(`/news/${id}`)        
-        .set('x-access-token', tokenPublic)
-        .set('Accept', /application\/json/)
-        .expect(200)
-        .expect(response => {
-            expect(response.body.message).toEqual('Noticia encontrada')
-        })
-    })
-})
-
-      describe('Noticia inexistente', () => {
-    
-      test('Error por id inexistente', async () => {
-        await request(app)
-          .get(`/news/${0}`)
-          .set('x-access-token', token)
-          .send(news)
-          .expect(404)
-          .expect('Content-Type', /application\/json/)
-          .expect(response => {
-            expect(response.body.message).toEqual('No se encontró la noticia')
-        })
-      })
-  })
- })
-
-
 describe('POST /news', () => {
 
     describe('Crea una noticia', () => {
 
-        test('Deberia crear una noticia', async () => {
+        test('Debera crear una noticia', async () => {
             await request(app)
             .post('/news')
             .set('x-access-token', token)
@@ -91,7 +56,7 @@ describe('POST /news', () => {
             image: ''
         }
 
-        test('Deberia mostrar error por no cumplir con las validaciones', async () => {
+        test('Debera mostrar error por no cumplir con las validaciones', async () => {
             await request(app)
             .post('/news')
             .set('x-access-token', token)
@@ -139,19 +104,50 @@ describe('POST /news', () => {
 })
 
 
+describe('GET /news/:id', () => {
+
+    describe('Muestra una noticia',  () => {
+                
+    test('Debera mostrar una noticia', async () => {
+        await request(app)
+        .get(`/news/${1}`)        
+        .set('x-access-token', token)
+        .set('Accept', /application\/json/)
+        .expect(200)
+        .expect(response => {
+            expect(response.body.message).toEqual('Noticia encontrada')
+        })
+    })
+})
+
+      describe('Noticia inexistente', () => {
+    
+      test('Error por id inexistente', async () => {
+        await request(app)
+          .get(`/news/${0}`)
+          .set('x-access-token', token)
+          .send(news)
+          .expect(404)
+          .expect('Content-Type', /application\/json/)
+          .expect(response => {
+            expect(response.body.message).toEqual('No se encontró la noticia')
+        })
+      })
+  })
+ })
+
 describe('PUT /news/:id', () => {
     
     describe('Actualiza una noticia', () => {
         const newsUpdate = {
-            id: 1,
             name: 'New title',
             content: 'New content',
             image: 'newImageTest.jpg'
         }
 
-        test('Deberia actualizar una noticia', async () => {
+        test('Debera actualizar una noticia', async () => {
             await request(app)
-            .put(`/news/${newsUpdate.id}`)
+            .put(`/news/${1}`)
             .set('x-access-token', token)
             .send(newsUpdate)
             .expect(200)
@@ -164,7 +160,7 @@ describe('PUT /news/:id', () => {
 
     describe('Error por no ser Administrador', () => {
             
-            test('Deberia mostrar error por no ser Administrador', async () => {
+            test('Debera mostrar error por no ser Administrador', async () => {
                 await request(app)
                 .put(`/news/${1}`)                
                 .set('x-access-token', tokenPublic)
@@ -238,21 +234,21 @@ describe('DELETE /news/:id', () => {
 
     describe('Elimina una noticia', () => {
 
-    test('Deberia eliminar una noticia', async () => {
+    test('Debera eliminar una noticia', async () => {
         await request(app)
         .delete(`/news/${1}`)
         .set('x-access-token', token)
         .expect(200)
         .expect('Content-Type', /application\/json/)
         .expect(response => {
-            expect(response.body.message).toEqual('Deleted')
+            expect(response.body.message).toEqual({message: "Deleted", id: "1"})
         })         
     })
     })
 
     describe('Error por no encontrar la noticia', () => {
        
-        test('Deberia mostrar error por no encontrar la noticia', async () => {
+        test('Debera mostrar error por no encontrar la noticia', async () => {
            await request(app)
             .delete(`/news/${999}`)
             .set('x-access-token', token)
@@ -266,7 +262,7 @@ describe('DELETE /news/:id', () => {
 
     describe('Error por no ser Administrador', () => {
         
-        test('Deberia mostrar error por no ser Administrador', async () => {
+        test('Debera mostrar error por no ser Administrador', async () => {
            await request(app)
             .delete(`/news/${1}`)
             .set('x-access-token', tokenPublic)
