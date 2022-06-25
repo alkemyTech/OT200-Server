@@ -63,20 +63,15 @@ const getAllCategories = async (req, res) => {
 };
 
 const CategoriesList = async(req, res) => {
-
-    const { page } = req.query;
-
+    
     try {
 
-        if( !page ) return res.status(400).json({ error: true, message: 'Bad request' });
+        const { page } = req.query;
 
-        
-        const pages = Number(page);
-        const categories = await categoryList( pages );
+        const categories = await categoryList( page );
 
         return res.status(200).json({ error:false, message: 'ok', categories });
-        
-        
+                
     } catch (error) {
         if( !error.status ) {
             return res.status(500).json({error: true, message: error.message, categories: null });

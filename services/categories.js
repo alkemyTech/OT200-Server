@@ -40,11 +40,11 @@ const createCategory = async(data) => {
 };
 
 
-const categoryList = async( data ) => {
+const categoryList = async( data ) => {    
+    
+    const currentPage = data && Number(data) > 0 ? Number(data) : 0;
 
-    const currentPage = data && data > 0 ? data : 0;
-
-    const limit = 1;
+    const limit = 2;
 
     const offset = currentPage * limit;
 
