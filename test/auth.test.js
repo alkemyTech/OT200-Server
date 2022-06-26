@@ -79,6 +79,9 @@ describe("Post/auth/login", () => {
         .send(randomUser);
       expect(response.statusCode).toBe(200);
       expect(response.body).toBeInstanceOf(Object);
+      expect(response.body.message).toEqual("Login exitoso");
+      expect(response.body.user.email).toEqual(randomUser.email);
+      expect(response.body.token).toBeDefined();
     });
   });
 
