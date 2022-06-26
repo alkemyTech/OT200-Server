@@ -26,14 +26,14 @@ const updateData = {
 
 describe('POST/categories', () => {
 
-  test('Debera crear una categoria, status: 200', async( ) => {
+  test('Debera crear una categoria, status: 201', async( ) => {
 
      const response = await request(app)
       .post('/categories')
       .set('x-access-token', token)
       .send( newData )
       .set('Accept', 'application/json')
-      expect(response.status).toEqual(200);
+      expect(response.status).toEqual(201);
       expect(response.body.category.name).toEqual( name );
       expect(response.body.category.description).toEqual( 'Esto es una descripción de prueba' );
       expect(response.body.category.image).toEqual( 'pruebaTest.png' );

@@ -61,7 +61,7 @@ paths:
                    type: object
                    $ref: '#/components/schemas/Categories'
         responses:
-           200:
+           201:
              description: La categoría se creo con exito
            401:
              description: No se ha enviado el token de autenticación
