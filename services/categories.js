@@ -15,7 +15,7 @@ const findAll = async() => {
 };
 
 const updateData = async (body, categoryId) => {
-  const category = await db.Category.update(
+  const category = await db.Categories.update(
     {
       name: body.name,
       description: body.description,
@@ -82,11 +82,18 @@ const getCategory = async( id ) => {
 }
 
 
+const getAllCategory = async() =>{
+  const category = await db.Categories.findAll();
+
+  return category;
+}
+
 module.exports = {
     findAll,
     createCategory,
     deleteOne,
     categoryList,
     getCategory,
-    updateData
+    updateData,
+    getAllCategory
 };

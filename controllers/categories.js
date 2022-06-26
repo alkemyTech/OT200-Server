@@ -90,9 +90,12 @@ const updateCategory = async (req, res) => {
   const { id } = req.params;
   try {
     const category = await updateData(req.body, id);
-    return res.status(category.id ? 200 : 404).json(category);
+
+    if(category[0] === 0) return res.status(404).json({ error: true, message: "Member not found"})
+
+    return res.status(200).json({message: 'Categoria actualizada'});
   } catch (error) {
-    res.status(500).json(error);
+    res.status(500).json(error.message);
   }
 };
 
@@ -109,7 +112,6 @@ const getOneCategory = async(req, res) => {
         
     } catch (error) {
 
-        console.log(`LOG: ${error.message}`);
 
         if( !error.status ) {
            return res.status(500).json({

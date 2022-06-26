@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { createActivity } = require('../controllers/activities');
-const { updateActivity } = require("../controllers/antivityController");
+const { updateActivity, createActivity } = require("../controllers/antivityController");
 const { verifyFields, errorHandler } = require('../middleware/activityValidator');
 const checkAdmin = require("../middleware/checkAdmin");
 const verifyToken = require("../middleware/verifyToken");
