@@ -24,6 +24,17 @@ components:
          name: Comunidad
          description: Sucesos diversos sobre la comunidad
          image: image.png 
+     TokenInvalido:
+       type: object
+       example:
+         message: Token invalido
+     PaginasLimitadas:
+       type: object
+       example:
+         error: true
+         message: Solo hay un total de 6 paginas.
+         categories: null
+         
 
 
 
@@ -77,6 +88,74 @@ paths:
              description: No se ha enviado el token de autenticación
            400:
              description: Token invalido
+
+     /categories/catalogue?page={number}:
+       get:
+        security:
+          - ApiKeyAuth: []
+        summary: Listado de categorias por paginación
+        tags: [Categories]
+        parameters:
+          - in: path
+            name: number
+            schema:
+              type: number
+            required: false
+            description: the number of page
+        responses:
+           200:
+             description: Detalles de las categorias
+             content:
+               application/json:
+                 schema:
+                   type: object
+                   example:
+                      error: false
+                      message: ok
+                      categories: {
+                        prevPage: http://localhost:3000/categories/catalogue?page=3,
+                        currentPage: http://localhost:3000/categories/catalogue?page=4,
+                        nextPage: http://localhost:3000/categories/catalogue?page=5,
+                        totalPages: 6,
+                          rows: [
+                                  {
+                                    id: 9,
+                                    name: categoria 9,
+                                    description: info 9,
+                                    image: image-9.png,
+                                    createdAt: 2022-06-25T20:43:51.000Z,
+                                    updatedAt: 2022-06-25T20:43:51.000Z,
+                                    deletedAt: null
+                                  },
+                                  {
+                                    id: 10,
+                                    name: categoria 10,
+                                    description: info 10,
+                                    image: image-10.png,
+                                    createdAt: 2022-06-25T20:44:00.000Z,
+                                    updatedAt: 2022-06-25T20:44:00.000Z,
+                                    deletedAt: null
+                                  }
+                                ]
+                                  }
+                      
+           401:
+             description: No se ha enviado el token de autenticación
+             content:
+              application/json:
+                schema:
+                  type: object
+                  example:
+                    error: No se ha enviado el token de autenticación
+           400:
+             description: Paginas limitadas / Token invalido
+             content:
+              application/json:
+               schema:
+                anyOf:
+                 - $ref: '#/components/schemas/PaginasLimitadas'
+                 - $ref: '#/components/schemas/TokenInvalido'
+           
 
      /categories/{id}:
        get:
