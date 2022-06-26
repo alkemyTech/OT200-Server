@@ -11,13 +11,6 @@ const validatorHandler = require("../middleware/validatorHandler");
 const bodyrequest = require("../helpers/checkCategories");
 
 
-router.put(
-  "/:id",
-  verifyToken,
-  checkAdmin,
-  validatorHandler(bodyrequest),
-  updateCategory
-);
 
 router.post('/',verifyToken , checkAdmin, validatorHandler( categoriesFields ), newCategory);
 
@@ -27,13 +20,9 @@ router.get("/catalogue", verifyToken, CategoriesList);
 
 router.get("/:id", verifyToken, checkAdmin, getOneCategory);
 
+router.put("/:id", verifyToken, checkAdmin, validatorHandler(bodyrequest), updateCategory );
 
-router.delete(
-  "/:id",
-  verifyToken,
-  checkAdmin,
-  deleteCategory
-);
+router.delete("/:id", verifyToken, checkAdmin, deleteCategory );
 
 
 module.exports = router;
