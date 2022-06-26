@@ -145,7 +145,7 @@ paths:
     post:
       tags:
       - login
-      summary: Create a new user
+      summary: Login user
       requestBody:
         description: A JSON object containing a user login information
         required: true
