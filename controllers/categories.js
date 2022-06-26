@@ -41,7 +41,7 @@ const newCategory = async(req, res) => {
         const categoria = await createCategory({ name, description, image });
     
     
-        res.status(200).json({ error: false, message:'La categoría se creo con exito', category: categoria});
+        res.status(201).json({ error: false, message:'La categoría se creo con exito', category: categoria});
         
     } catch (error) {
 
