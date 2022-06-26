@@ -335,7 +335,7 @@ describe('DELETE/categories/:id', () => {
   test('La categoria no existe en DB, status 404', async() => { 
 
    const response = await request(app)
-      .delete('/categories/ABC123')
+      .delete('/categories/30')
       .set('x-access-token', token)
       .set('Accept', 'application/json')
       expect(response.status).toEqual(404);

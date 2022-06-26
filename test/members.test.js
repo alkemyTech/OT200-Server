@@ -157,7 +157,7 @@ describe('DELETE/members/:id', () => {
   test('El miembro no existe en DB, status 404', async() => { 
 
    const response = await request(app)
-      .delete('/members/ABC123')
+      .delete('/members/30')
       .set('x-access-token', token)
       .set('Accept', 'application/json')
       expect(response.status).toEqual(404);
