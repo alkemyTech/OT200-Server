@@ -1,7 +1,10 @@
 const express = require("express");
-const getOrganizations = require("../controllers/organizations.controller");
 const router = express.Router();
-const verifyToken = require("./../middleware/verifyToken");
+
+const { getOrganizations, updatedOrganizationData } = require("../controllers/organizations.controller");
+const { verifyToken, checkAdmin } = require('../middleware');
+const validatorHandler = require('../middleware/validatorHandler');
+const { organizationFields } = require('../helpers');
 
 
 router.get(
@@ -10,5 +13,6 @@ router.get(
   getOrganizations
 );
 
+router.put('/public/:id', verifyToken, checkAdmin, validatorHandler(organizationFields), updatedOrganizationData );
 
 module.exports = router;
