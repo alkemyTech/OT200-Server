@@ -1,5 +1,5 @@
-'use strict';
-const { Model } = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -9,40 +9,34 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       User.belongsTo(models.Role, {
-        as: 'role',
-        foreignKey: 'id',
-        target_key: 'roleId'
+        as: "role",
+        foreignKey: "id",
+        target_key: "roleId",
       });
       User.hasMany(models.Comment, {
-        foreignKey: 'user_id'
-      })
+        foreignKey: "user_id",
+      });
     }
-  };
-  User.init({
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
-    email: DataTypes.STRING,
-    password: DataTypes.STRING,
-    photo: DataTypes.STRING,
-    roleId: DataTypes.INTEGER,
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE,
-    deletedAt: DataTypes.DATE
-  }, {
-    sequelize,
-    modelName: 'User',
-    timestamps: true,
-    paranoid: true
-  });
-
-  //Remueve el password del usuario. 
-  User.prototype.toJSON =  function () {
-    let values = Object.assign({}, this.get());
-  
-    delete values.password;
-    return values;
-  };
-
+  }
+  User.init(
+    {
+      firstName: DataTypes.STRING,
+      lastName: DataTypes.STRING,
+      email: DataTypes.STRING,
+      password: DataTypes.STRING,
+      photo: DataTypes.STRING,
+      roleId: DataTypes.INTEGER,
+      createdAt: DataTypes.DATE,
+      updatedAt: DataTypes.DATE,
+      deletedAt: DataTypes.DATE,
+    },
+    {
+      sequelize,
+      modelName: "User",
+      timestamps: true,
+      paranoid: true,
+    }
+  );
 
   return User;
 };
