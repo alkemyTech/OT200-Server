@@ -23,12 +23,10 @@ const findAll = async (page) => {
 
     const nextPage = (page + 1);        
 
-    const news = await db.News.findAndCountAll({
+    const {count, rows} = await db.News.findAndCountAll({
         offset,
         limit
     });
-
-    const {count} = news
     
     const totalPages = Math.ceil(count / limit);
 
@@ -40,8 +38,8 @@ const findAll = async (page) => {
         prevPage : `${ prevPage <= 0 ? 'No hay página previa' : 'http://localhost:3000/news?page=' + prevPage }`,
         currentPage: page,
         nextPage : `${  nextPage > totalPages  ? 'No hay página siguiente' : 'http://localhost:3000/news?page=' + nextPage }`,
-        news,
-        totalPages
+        totalPages,
+        rows
     };
 
     return newsAll

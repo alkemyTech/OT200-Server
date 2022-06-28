@@ -5,7 +5,7 @@
   "scripts": {
     "start": "nodemon ./bin/www",
     "test": "jest --verbose --silent",
-    "test:watch":"npm run test -- --watchAll"
+    "test:watch": "npm run test -- --watchAll"
   },
   "dependencies": {
     "@sendgrid/mail": "^7.7.0",
