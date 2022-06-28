@@ -1,0 +1,300 @@
+tags:
+  - name: News
+    description: Documentacion de Novedades.
+
+components:
+  schemas:
+    News:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: id de la noticia.
+        name:
+          type: string
+          description: Titulo de la noticia.
+        content:
+          type: string
+          description: Contenido de la noticia.
+        image:
+          type: string
+          description: Imagen de la noticia.
+      required:
+        -name
+        -image
+        -content
+      example:
+        name: Noticia 1
+        content: Esto ocurrio en la noticia 1.
+        image: news.jpg
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            type: object
+            content:
+              msg: string
+          example:
+            msg: Token inválido
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            type: object
+            content:
+              msg: string
+          example:
+            msg: La petición enviada es inválida.
+    NotFound:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            type: object
+            content:
+              msg: string
+          example:
+            msg: No encontrado
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            type: object
+            content:
+              msg: string
+          example:
+            msg: Error con el servidor.
+  securitySchemes:
+    ApiKeyAuth: 
+      type: apiKey
+      in: header
+      name: x-access-token
+      
+security: 
+    - ApiKeyAuth: []
+
+
+
+
+paths:
+  /news: 
+    post:
+      summary: Crea las noticias.
+      tags: [News]
+      security:
+      - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: '#/components/schemas/News'
+      responses:
+        201:
+          description: Noticia creada correctamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/News'
+        400:
+          $ref: '#/components/schemas/BadRequest'
+        500:
+          $ref: '#/components/schemas/InternalServerError'
+
+  
+  /news?page={number}:
+    get:
+      summary: Muestras todas las noticias por paginacion.
+      tags: [News] 
+      parameters:
+        - in: query
+          name: page
+          schema: 
+            type: integer
+            description: Query de page.
+          required: true
+      responses:
+        200:
+          description: OK
+          content: 
+            application/json:
+              schema:
+                type: object
+                example:
+                  error: false
+                  message: ok
+                  news: {
+                    prevPage: No hay página previa,
+                    currentPage: 1,
+                    nextPage: http://localhost:3000/news?page=2,
+                    news: {
+                      count: 2,
+                      rows: [
+                              {
+                                id: 1,
+                                name: Noticia 1,
+                                description: Esto ocurrio en la noticia 1.,
+                                image: news.jpg,
+                                createdAt: 2022-06-26T03:30:47.000Z,
+                                updatedAt: 2022-06-26T03:30:47.000Z,
+                                deletedAt: null
+                              },
+                              {
+                                id: 2,
+                                name: Noticia 2,
+                                description: Esto ocurrio en la noticia 2.,
+                                image: news.jpg,
+                                createdAt: 2022-06-26T03:30:47.000Z,
+                                updatedAt: 2022-06-26T03:30:47.000Z,
+                                deletedAt: null
+                              }
+                            ]
+                      },
+                    totalPages: 1
+                  }
+                  
+                  
+  /news/{id}:
+    get:
+      summary: Muestra la noticia por id.
+      tags: [News]
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema: 
+            type: integer
+            description: Id de noticia.
+          required: true
+      responses:
+        200:
+          description: OK
+          content: 
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/News'
+        404:
+          description: NotFound
+          content: 
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: No se encontró la noticia.
+
+    put:
+      summary: Actualiza la noticia
+      tags: [News]
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema: 
+            type: integer
+            description: Id de la noticia.
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/News'
+      responses:
+        200:
+          description: Noticia actualizada correctamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                content:
+                  msg: string
+                example:
+                  message: Noticia actualizada,
+                  data: [
+                    1
+                  ]
+                  newData: {
+                    name: new Noticia 1,
+                    content: new Esto ocurrio en la noticia 1.,
+                    image: news.jpg
+                  }
+        400:
+          description: Error. Bad Request.
+          content:
+            application/json:
+              schema:
+                type: object
+                content:
+                  msg: string
+                example:
+                  errors: [
+                            {
+                              value: '',
+                              msg: Title is required,
+                              param: name,
+                              location: body
+                            },
+                            {
+                              value: '',
+                              msg: Title must be between 3 and 15 characters long,
+                              param: name,
+                              location: body
+                            }
+                          ]
+        401:
+          $ref: '#/components/schemas/Unauthorized'
+        404:
+          $ref: '#/components/schemas/NotFound'
+        500:
+          $ref: '#/components/schemas/InternalServerError'
+
+    delete:
+      summary: Borra la noticia.
+      tags: [News]
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema: 
+            type: integer
+            description: Id de la noticia.      
+          required: true 
+      responses:
+        200:
+          description: Noticia borrada correctamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                content:
+                  msg: string
+                example:
+                  message: Deleted.
+                  id: 1
+        400:
+          $ref: '#/components/schemas/BadRequest'
+        401:
+          $ref: '#/components/schemas/Unauthorized'
+        404:
+          description: Not Found
+          content:
+            applicacion/json:
+              schema:
+              type: object
+              content:
+                msg: string
+              example:
+                message: News not found
+        500:
+          $ref: '#/components/schemas/InternalServerError'
+
+
