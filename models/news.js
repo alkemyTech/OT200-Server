@@ -9,9 +9,6 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      New.hasOne(models.Categories, {
-        foreignKey: "categoryId",
-      });
       New.hasMany(models.Comment, {
         foreignKey: 'post_id'
       })

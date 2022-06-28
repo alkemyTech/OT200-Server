@@ -6,10 +6,10 @@ const categoriesRouter = require('./categories');
 const commentsRouter = require('./comments');
 const slidesRouter = require('./slides');
 const testimonialsRouter = require('./testimonials');
-const commentsRouter = require('./comments');
+const postRouter = require('./post');
 const newsRouter = require('./news');
 const activitiesRouter = require('./activities')
-const organizationRouter = require('./organization')
+const organizationsRouter = require('./organizations')
 
 
 /* GET home page. */
@@ -26,10 +26,10 @@ router.use('/news', newsRouter);
 router.use('/comments', commentsRouter);
 router.use('/slides', slidesRouter);
 router.use('/testimonials', testimonialsRouter);
-router.use('/comments', commentsRouter);
+router.use('/post', postRouter);
 router.use('/news', newsRouter);
 router.use('/activities',activitiesRouter)
-router.use('/organization',organizationRouter)
+router.use('/organizations',organizationsRouter)
 
 
 module.exports = router;

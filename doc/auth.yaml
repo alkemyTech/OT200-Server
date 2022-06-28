@@ -1,0 +1,189 @@
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        photo:
+          type: string
+        roleId:
+          type: integer
+          
+      required:
+        - firstName
+        - lastName
+        - email
+        - password
+        
+      example:
+        firstName: Test
+        lastName: User
+        email: testinguser@test.com
+        password: Testinguser@123
+        photo: PhotoUser
+    
+    UserLogin:
+      type: object
+      properties: 
+        email: 
+          type: string
+        password:
+          type: string
+      requied:
+        - email
+        - password    
+      
+      example:
+        email: UserEmail
+        password: UserPassword
+
+    validationError:
+      type: object
+      properties:
+        value:
+          type: string
+        msg:
+          type: string
+        param:
+          type: string
+        location:
+          type: string
+    
+      example:
+        value: empty
+        msg: field must not be empty
+        param: email
+        location: body
+        
+    serverError:
+      type: object
+      properties:
+        message:
+          type: string
+        data:
+          type: object
+      
+      example:
+        message: Something is wrong
+        data: {}
+        
+    loginSucess:
+      type: object
+      properties:
+        message:
+          type: string
+        user:
+          type: object
+        token:
+          type: string
+      
+      example:
+        message: Login Successful
+        user: {
+          id: 41,
+          firstName: Usuario,
+          lastName: Demo,
+          email: test@test1.com,
+          photo: testing.png,
+          roleId: 1,
+          createdAt: 2022-06-17,
+          updatedAt: 2022-06-17,
+          deletedAt: null
+        }
+        token: XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+        
+
+paths:
+  /auth/register:
+    post:
+      tags:
+      - register
+      summary: Create a new user
+      requestBody:
+        description: A JSON object containing a new user information
+        required: true
+        content: 
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        201:
+          description: A JSON object with new user data.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        
+        400:
+          description: Invalid inputs in the form body.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/validationError'
+                  
+        500:
+          description: Server error.
+          content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/serverError'
+              
+  /auth/login:
+    post:
+      tags:
+      - login
+      summary: Login user
+      requestBody:
+        description: A JSON object containing a user login information
+        required: true
+        content: 
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLogin'
+      responses:
+        200:
+          description: Login successful.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/loginSucess'
+        400:
+          description: Invalid inputs in the form body.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/validationError'
+                  
+        500:
+          description: Server error.
+          content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/serverError'
+          
+              
+     
+            
+      
+
+
+  
